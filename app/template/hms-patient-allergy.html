@@ -1,0 +1,32 @@
+
+    <!-- <ul>
+      <li ng-repeat="item in allergy"> 
+        Substance: {{item.substance}}
+        Status: {{item.status}}
+        Type: {{item.type}}
+      </li>
+  </ul> -->
+    <div class="card">
+        <div class="card-content">
+           <!--  <span class="card-title">Allergy</span> -->
+            <div class="card-size">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-field="category">Category</th>
+                            <th data-field="substance">Substance</th>
+                            <th data-field="status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in patientAllergy">
+                            <td>{{item.category}}</td>
+                            <td>{{item.substance}}</td>
+                            <td>{{item.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

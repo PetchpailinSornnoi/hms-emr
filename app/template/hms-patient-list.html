@@ -1,0 +1,67 @@
+<!-- <div>
+	<ul id="task-card" class="collection with-header">
+        <li class="collection-header cyan">
+            <h5 class="task-card-title">Patient Visit</h5>
+        </li>
+        <li class="collection-item">Patient In Queue</li>
+        
+        <span ng-repeat="item in patientlist">
+            <a ng-href="#!/patient/09-95-000010" class="collection-item avatar">
+                <img src="images/patient-{{item.encounter.charAt(0).toLowerCase()}}.jpg" alt="" class="circle">
+                <span class="title black-text">{{item.hn}}</span>
+            </a>
+        </span>
+        </li>
+	</ul>                       
+</div>
+
+ -->
+<div>
+<table class="striped">
+    <thead>
+        <tr>
+            <th>HN</th>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>Date Of Birth</th>
+            <th>Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in patientlist">
+          <!-- <a ng-href="#!/patient/09-95-000010" class="collection-item avatar"> -->
+            <td>{{item.hn}}</td>
+            <td>MR.KIATKWANKUL DAYIN </td>
+            <td>Female </td>
+            <td>1992-01-20</td>
+            <td><button type="button" ng-click="patientDetail(item.hn)"> Detail</button></td>
+          <!-- </a> -->
+        </tr>
+       <!--  <tr>
+            <td>09-95-000010</td>
+            <td>MR.KIATKWANKUL DAYIN </td>
+            <td>Female </td>
+            <td>1992-01-20</td>
+        </tr>
+        <tr>
+            <td>09-95-000010</td>
+            <td>MR.KIATKWANKUL DAYIN </td>
+            <td>Female </td>
+            <td>1992-01-20</td>
+        </tr>
+        <tr>
+            <td>09-95-000010</td>
+            <td>MR.KIATKWANKUL DAYIN </td>
+            <td>Female </td>
+            <td>1992-01-20</td>
+        </tr>
+        <tr>
+            <td>09-95-000010</td>
+            <td>MR.KIATKWANKUL DAYIN </td>
+            <td>Female </td>
+            <td>1992-01-20</td>
+        </tr> -->
+    </tbody>
+</table>
+</div>
+
