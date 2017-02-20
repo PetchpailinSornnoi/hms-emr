@@ -9,7 +9,7 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
 //   });
 // }])
 
-.controller('View2Ctrl', function($scope,$routeParams,$cookies,$window,$rootScope) {
+.controller('View2Ctrl', function($scope,$routeParams,$cookies,$window,$rootScope, $sce) {
     $scope.patientId = $routeParams.patientId;
     $scope.encounter = $routeParams.encounter;
 
@@ -36,5 +36,11 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
         alert("test");
         $window.location.href = '../DWV-Dicom/dwv/viewers/static/index.html';
     }
-    
+    //$scope.quippeURL = "http://10.103.10.61:9100/BDMSDefault.htm?cookieID=1478572578212&patientId="+$routeParams.patientId+"&episodeNumber="+$routeParams.encounter;
+    $scope.trustSrc = function(src) {
+        return $sce.trustAsResourceUrl(src);
+    }
+
+    $scope.quippeURL = {src:"http://10.103.10.61:9100/BDMSDefault.htm?cookieID=1478572578212&patientId="+$routeParams.patientId+"&episodeNumber="+$routeParams.encounter, title:"Quippe"};
+
 });

@@ -47,9 +47,10 @@
             <ul class = "z-depth-1" tabs reload="allTabContentLoaded">
                 <li class="tab col s2"><a class="active"  href="#test1">Vital Signs</a></li>
                 <li class="tab col s2"><a href="#test2">Allergy</a></li>
-                <li class="tab col s3"><a href="#test3">Immunisation History</a></li>
+                <li class="tab col s2"><a href="#test3">Immunisation History</a></li>
                 <li class="tab col s2"><a href="#test4">Medical History</a></li>
                 <li class="tab col s2"><a href="#test5">Family History</a></li>
+                <li class="tab col s2"><a href="#quippenote">Quippe Note</a></li>
             </ul>
         </div>
         <div id="test1" class="col s12">
@@ -85,6 +86,17 @@
             <div class="card">
                 <div class="card-content">
                 
+                </div>
+            </div>
+        </div>
+        <div id="quippenote" class="col s12">
+            <div class="card">
+                <div class="card-content">
+ 
+                    <iframe ng-src="{{trustSrc(quippeURL.src)}}"> 
+                        <p>Your browser does not support iframes.</p>
+                    </iframe>
+
                 </div>
             </div>
         </div>
