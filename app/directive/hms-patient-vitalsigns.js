@@ -5,23 +5,26 @@ angular.module('hmsPatientVitalsigns', ["ngCookies"])
             replace: 'true',
             templateUrl: 'template/hms-patient-vitalsigns.html',
             scope: {
+                url: "@",
                 selectedPatient: "@",
+                encounter: "@",
                 accessToken: "@"
             },
             link: function($scope, element, attrs) {
-                console.log($scope.selectedPatient);
-                console.log($scope.accessToken);
+                console.log($scope.encounter);
+                // console.log($scope.accessToken);
 
                 $scope.getPatientVitalSigns = function() {
                   $http({
                     method : "GET",
-                    //url: "http://localhost:9000/Observation/vital/"+$scope.selectedPatient,
-                    url: "http://localhost:9000/Observation/vital/09-95-000001",
+                    url: "http://"+$scope.url+"/Observation/vitalsign/"+$scope.selectedPatient+"/"+$scope.encounter,
+                    //url: "http://localhost:9000/Observation/vital/09-95-000001",
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"
                     },
                   }).then(function mySuccess(response) {
+                        console.log(response.data.data);
                         $scope.patientVitalsigns = response.data.data;
                         // $scope.patient = response.data.data;
                        

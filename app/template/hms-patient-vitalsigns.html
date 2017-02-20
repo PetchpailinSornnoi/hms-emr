@@ -1,25 +1,28 @@
-<div class="card">
-    <div class="card-content">
+<!--<div class="card">
+    <div class="card-content">-->
         <!-- <span class="card-title">Vital Signs</span> -->
 
-             <div class="card-size">
+             <!--<div class="card-size">-->
                 <table>
                     <thead>
                         <tr>
                             <th data-field="codeDesc"> </th>
                             <th data-field="value">Value</th>
                             <th data-field="unit">Unit</th>
+                            <th data-field="Date Issued">DateTime Issued</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat = "item in patientVitalsigns">
+                        <tr ng-repeat = "item in patientVitalsigns" ng-if=item.value!==""> 
+                            <!--ng-if=item.value!==""-->
                             <td>{{item.code.set_desc}} </td>
                             <td>{{item.value}}</td>
                             <td>{{item.unit}}</td>
+                            <td>{{item.issued | date : 'medium'}}</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            <!--</div>
             
     </div>
-</div>
+</div>-->

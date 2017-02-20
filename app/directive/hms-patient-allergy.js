@@ -5,6 +5,7 @@ angular.module('hmsPatientAllergy', ["ngCookies"])
             replace: 'true',
             templateUrl: 'template/hms-patient-allergy.html',
             scope: {
+                url: "@",
                 selectedPatient: "@",
                 accessToken: "@"
             },
@@ -15,7 +16,7 @@ angular.module('hmsPatientAllergy', ["ngCookies"])
                 $scope.getPatientAllergy = function() {
                   $http({
                     method : "GET",
-                    url: "http://localhost:9000/Allergy/"+$scope.selectedPatient,
+                    url: "http://"+$scope.url+"/Allergy/"+$scope.selectedPatient,
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"

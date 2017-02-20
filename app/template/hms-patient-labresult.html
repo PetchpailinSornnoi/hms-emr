@@ -11,26 +11,26 @@
                 </tr>
             </thead>
         </table> -->
-        <div class="card-size">
+       <!--  <div class="card-size"> -->
             <table>
                 <thead>
                     <tr>
-                        <th>Group</th>
-                        <th>Hos Code</th>
-                        <th>Hos Desc</th>
+                        <th>Code</th>
+                        <th>Item</th>
                         <th>Value</th>
+                        <!-- <th>Unit</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in patientLabresult">
-                        <td>{{item.group}}</td>
-                        <td>{{item.hos_testCode_Code}}</td>
-                        <td>{{item.hos_testCode_Desc}}</td>
-                        <td>{{item.value}}</td>
+                        <td>{{item.code.set_desc}}</td>
+                        <td>{{item.code.test_desc}}</td>
+                        <td>{{item.value}} {{item.unit}}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+      <!--   </div> -->
+       <!--  {{patientLabresult}} -->
     </div>
 </div>
 </div>

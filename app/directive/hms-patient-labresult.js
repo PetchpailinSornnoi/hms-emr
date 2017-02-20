@@ -6,17 +6,19 @@ angular.module('hmsPatientLabresult', ["ngCookies"])
             templateUrl: 'template/hms-patient-labresult.html',
             scope: {
                 selectedPatient: "@",
-                accessToken: "@"
+                accessToken: "@",
+                url : "@"
             },
             link: function($scope, element, attrs) {
                 console.log($scope.selectedPatient);
                 console.log($scope.accessToken);
 
                 $scope.getPatientLabresult = function() {
+                  // Observation/labresult/09-17-001101/O09-17-048651/N620?pretty=true
                   $http({
                     method : "GET",
-                    // url: "http://localhost:9000/Observation/lab/"+$scope.selectedPatient,
-                    url: "http://localhost:9000/Observation/lab/09-95-000001",
+                    //url: "http://"+$scope.url+"/Observation/labresult/"+$scope.selectedPatient+"/"+$scope.en+"/"+$scope.setCode;
+                    url: "http://"+$scope.url+"/Observation/labresult/09-17-001101/O09-17-048651/N620",
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"

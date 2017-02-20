@@ -170,27 +170,37 @@ body {
 
 
 </style>
-<body>
+<body ng-controller="mainCtrl">
     <input type="hidden" value="true" id="nav-state">
-    <div class="navbar-fixed">
-        <nav class="cyan">
-            <div class="nav-wrapper">
-                <ul class="left">
-                    <span style="font-size:30px;cursor:pointer; margin-left: 25px;" onclick="nav()">&#9776;</span> 
-                </ul>
-            </div>
-        </nav>
+      <div class="navbar-fixed" ng-show = isLogin>
+          <nav class="cyan">
+              <div class="nav-wrapper">
+                  <ul class="left">
+                      <span style="font-size:30px;cursor:pointer; margin-left: 25px;" onclick="nav()">&#9776;</span> 
+                  </ul>
+                  <ul class="right">
+                      <li>
+                         {{practitionerInfo}}
+                         <a href="#" ng-click = "logout($event)" class="logout">
+                               Log out
+                         </a>
+                      </li>
 
-        <nav id="horizontal-nav" class="white hide-on-med-and-down">
-           <div class="nav-wrapper">
-                
-            <div class="right blue-grey-text">SAKNAN MANOTAYA, MD (Result Doctor)</div>
-            </div>  
-        <!--  -->
-        </nav>
+                  </ul>
+              </div>
+          </nav>
 
-        
-    </div>
+          <!--<nav id="horizontal-nav" class="white hide-on-med-and-down">
+             <div class="nav-wrapper">
+                  
+              <div class="right blue-grey-text">SAKNAN MANOTAYA, MD (Result Doctor)</div>
+              </div>  
+         
+          </nav>-->
+
+          
+      </div>
+
  
     <!--<span id="mySidenav" class="sidenav">
         <a href="#">About</a>
@@ -201,34 +211,42 @@ body {
         <a href="#">Contact</a>
     </span>-->
 
-    <ul id="nav-mobile" class="side-nav fixed">
-                    <!--<li class="bold"><a href="http://materializecss.com/mobile.html" class="waves-effect waves-teal">Calendar</a></li>-->
-                    <li class="no-padding">
-                        <ul class="collapsible collapsible-accordion">
-                            <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Patient</a>
-                                <div class="collapsible-body">
-                                    <ul>
-                                        <li><a href="#!/patient">Patients</a></li>
-                                        <!--<li><a href="helpers.html">Visit</a></li>
-                                        <li><a href="dialogs.html">Visit History</a></li>-->
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-      </ul>
+    <!--Demographics
+    Social History
+    Immunisation History
+    Medical History
+    Family History
+    Allergies
+    Vital signs
+    Prescription
+    Lab Results-->
+
+    <ul id="nav-mobile" class="side-nav fixed" ng-if = isLogin>
+                    <!--<li class="bold"><a href="view2/view2.html" class="waves-effect waves-teal">Calendar</a></li>-->
+                    <li class="bold"><a href="#!/patientlist" class="waves-effect waves-teal">Patient List</a></li>
+                    <li class="bold"><a href="#" class="waves-effect waves-teal">Profile</a></li>
+                    <li class="bold"><a href="#!/labresult" class="waves-effect waves-teal">Medicals Image</a></li>
+                    <!-- <li>
+                        <a href="#" ng-click = "logout($event)" class="cyan-text">
+                                  <span>Log out</span>
+                        </a>
+                    </li>    -->
+                    
+    </ul>
  
- <div id="main">
-    <div class="wrapper" >
+ <div id="main" style = "margin-top : 0px">
+    <div class="wrapper" style="height: 1000px;" >
         <div ui-layout="{flow : 'row'}">
-            <div ui-layout-container class=" content-back"><div ng-view></div></div>
-            <div ui-layout-container class=" footer-back" size="20%"></div>
+            <!--ui-layout-container -->
+            <!--<div style = "overflow-y: hidden; position: fixed;"><div ng-view></div></div>-->
+            <div><div ng-view></div></div>
+            <!--<div ui-layout-container class=" footer-back" size="20%"></div>-->
         </div>
     </div>
  </div>
 
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-layout/ui-layout.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -261,13 +279,17 @@ function nav(){
 //angular.module('myApp', ['ui.layout']);
 </script>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/angular-materialize.min.js"></script>
   
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <!--<script src="bower_components/angular-ui-router/release/angular-ui-route.js"></script>-->
+
+
   <script src="app.js"></script>
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
+  <script src="view3/view3.js"></script>
   <script src="login/login.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
@@ -281,6 +303,8 @@ function nav(){
   <script src="directive/hms-patient-demographic.js"></script>
   <script src="directive/hms-patient-vitalsigns.js"></script>
   <script src="directive/hms-patient-labresult.js"></script>
+  <script src="directive/hms-practitioner-info.js"></script>
+  <script src="directive/hms-logout.js"></script>
   <!---->
 </body>
 </html>

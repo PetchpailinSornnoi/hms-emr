@@ -65,14 +65,29 @@ footer.page-footer {
 
 
 .side-nav{
-  top: 130px;
+  top: 65px;
   width: 250px;
   transition: 0.5s;
   z-index: 99 !important
 
 }
 
-.tabs-vertical ul.tabs{
+img#patientImage{
+    width: 120px;
+}
+
+iframe {
+  /*  position: fixed;*/
+    background: #000;
+    border: none;
+    top: 0; right: 0;
+    bottom: 0; left: 0;
+    width: 100%;
+    /*height: 100%;*/
+    height: 900px;
+}
+
+/*.tabs-vertical ul.tabs{
    height: auto;
    -ms-flex-direction: column;
   -webkit-flex-direction: column;
@@ -80,14 +95,14 @@ footer.page-footer {
   display: -webkit-flex;
   display: flex;
 
-}
+}*/
 
 /*.tabs-vertical .tab {
         width: 100%;
 
 }*/
 
-.tabs-vertical .tabs .tab{
+/*.tabs-vertical .tabs .tab{
     display: inline-block;
     text-align: center;
     line-height: 48px;
@@ -114,5 +129,9 @@ footer.page-footer {
 
 .indicator{
   display: none
+}*/
+nav ul a.logout{
+  display: inline;
 }
+
 

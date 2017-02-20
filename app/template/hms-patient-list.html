@@ -21,6 +21,7 @@
     <thead>
         <tr>
             <th>HN</th>
+            <th>EN</th>
             <th>Full Name</th>
             <th>Gender</th>
             <th>Date Of Birth</th>
@@ -31,10 +32,11 @@
         <tr ng-repeat="item in patientlist">
           <!-- <a ng-href="#!/patient/09-95-000010" class="collection-item avatar"> -->
             <td>{{item.hn}}</td>
-            <td>MR.KIATKWANKUL DAYIN </td>
-            <td>Female </td>
-            <td>1992-01-20</td>
-            <td><button type="button" ng-click="patientDetail(item.hn)"> Detail</button></td>
+            <td>{{item.encounter}}</td>
+            <td>{{item.name}} </td>
+            <td>{{item.gender}} </td>
+            <td>{{item.birthDate}}</td>
+            <td><button type="button" ng-click="patientDetail(item.hn,item.encounter)"> Detail</button></td>
           <!-- </a> -->
         </tr>
        <!--  <tr>

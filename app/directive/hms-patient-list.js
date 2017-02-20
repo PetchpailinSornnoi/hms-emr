@@ -5,6 +5,7 @@
             replace: 'true',
             templateUrl: 'template/hms-patient-list.html',
             scope: {
+                url: "@",
                 practitionerId: "@",
                 date: "@",
                 accessToken: "@",
@@ -28,25 +29,31 @@
                   console.log(hn);
                   $http({
                     method : "GET",
-                    url : "http://localhost:9000/Patient/"+hn,
+                    url : "http://"+$scope.url+"/Patient/"+hn,
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"
                     },
                   }).then(function mySuccess(response) {
                         var patient = response.data.data;
+                        console.log(patient.gender);
+                        console.log(patient.birth_date);
                         $scope.patientlist[key].name = patient.name[0].family_name+" "+patient.name[0].given_name;
+                        $scope.patientlist[key].gender = patient.gender;
+                        $scope.patientlist[key].birthDate = patient.birth_date;
+
                     }, function myError(response) {
                         $scope.error = response.statusText;
                     }); 
                 }
 
                 $scope.getPatientList = function() {
+                  console.log($scope.accessToken);
                   
                   $http({
                     method : "GET",
                     //url : "http://localhost:9000/Encounter/"+practitioner.identifier+"?date="+$scope.date,
-                    url : "http://localhost:9000/Encounter/"+$scope.practitionerId+"?date="+$scope.date,
+                    url : "http://"+$scope.url+"/Encounter/"+$scope.practitionerId+"?date="+$scope.date,
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"
@@ -78,7 +85,7 @@
                             $scope.patientlist.push(patient);
                         });
 
-                        //console.log($scope.patientlist);
+                        console.log($scope.patientlist);
 
                         // $scope.patientlist = patientlist;
 
@@ -91,8 +98,8 @@
                     }); 
                 },
 
-                $scope.patientDetail = function(value) {
-                    $window.location='/#!/patient/'+value;
+                $scope.patientDetail = function(hn,en) {
+                    $window.location='#!/patient/'+hn+"/"+en;
                 };
 
                

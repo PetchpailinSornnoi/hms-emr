@@ -5,15 +5,23 @@ angular.module('hmsAuth', ["ngCookies"])
             replace: 'true',
             templateUrl: 'template/hms-auth.html',
             scope: {
+                url : '@',
                 username: "@",
-                date: "@"
+                date: "@",
+                accessToken: "="
             },
             link: function($scope, element, attrs) {
+
+              
                 
-                $scope.$on('token', function (event, result) {
-                    $scope.receivedData = result.data;
-                    $scope.accessToken = result.data;
-                });
+                
+                // $scope.$on('token', function (event, result) {
+                //     $scope.receivedData = result.data;
+                //     $scope.accessToken = result.data;
+
+                // });
+
+               
 
                 // $scope.$on('publishHn', function (event, result) {
                 //     $scope.receivedData = result.data;
@@ -22,28 +30,35 @@ angular.module('hmsAuth', ["ngCookies"])
 
                 $scope.login = function(){
                     var user_authen = "009900203";
-                    var pass_authen = "6ZoYxCjLONXyYIU2eJIuAw==";
+                    var pass_authen = "865202d8a5d38f56e428b3c0b512510c";
+
+                     console.log($scope.accessToken);
+
                     $http({
                         method : "GET",
-                        url: "http://localhost:9000/user_authentication",
+                        url: "http://"+$scope.url+"/user_authentication",
+                        //url: "http://172.18.62.213/hmsgw/user_authentication?user=009900203&pass=865202d8a5d38f56e428b3c0b512510c",
                         headers: {
                            'Authorization': 'Bearer '+$scope.accessToken,
                            "Access-Control-Allow-Origin": "*"
                         },
                         params: {"user": user_authen , "pass": pass_authen}
                     }).then(function mySuccess(response) {
-                        var practitioner = response.data.practitioner[0].practitioner;
+                        console.log(response.data.data);
+                        var practitioner = response.data.data.practitioner;
+                        // console.log(practitioner);
 
                         $cookies.putObject('practitioner', practitioner);
 
                      
-                        // var cookieWObject = $cookies.getObject('practitioner');
-                        // console.log(cookieWObject);
+                        var cookieWObject = $cookies.getObject('practitioner');
+                        console.log(cookieWObject);
 
 
-                        $window.location='/#!/view1';
+                        $window.location='#!/patientlist';
                         
                     }, function myError(response) {
+                        console.log(response);
                         $scope.error = response.statusText;
                     }); 
 
