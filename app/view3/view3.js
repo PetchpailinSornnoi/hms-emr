@@ -12,6 +12,8 @@ angular.module('myApp.view3', ['ngRoute','ngCookies'])
 .controller('View3Ctrl', function($scope,$routeParams,$cookies,$window,$rootScope) {
 	var practitioner = $cookies.getObject('practitioner');
 
+    $rootScope.hnHasLoaded = false;
+
 	$rootScope.practitionerInfo = practitioner.name[0].given_name+" "+practitioner.name[0].family_name+"("+practitioner.qualification+") ,"+practitioner.specialty_desc;
 
      if(practitioner === undefined || practitioner === null){

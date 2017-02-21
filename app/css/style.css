@@ -65,7 +65,7 @@ footer.page-footer {
 
 
 .side-nav{
-  top: 65px;
+  top: 80px;
   width: 250px;
   transition: 0.5s;
   z-index: 99 !important
@@ -73,7 +73,7 @@ footer.page-footer {
 }
 
 img#patientImage{
-    width: 120px;
+  width: 106px;
 }
 
 iframe {
@@ -132,6 +132,10 @@ iframe {
 }*/
 nav ul a.logout{
   display: inline;
+}
+
+nav{
+  height: 80px !important;
 }
 
 

@@ -13,6 +13,8 @@ angular.module('myApp.view1', ['ngRoute','ngCookies'])
     $scope.practitioner  = $cookies.getObject('practitioner');
     $scope.token = $cookies.getObject('token');
 
+     $rootScope.hnHasLoaded = false;
+
     $scope.showTabs = true;
 
     var practitioner = $cookies.getObject('practitioner');

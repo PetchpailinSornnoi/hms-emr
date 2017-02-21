@@ -30,6 +30,7 @@ angular.module('myApp', [
      // $scope.token = $cookies.getObject('token');
      // console.log($scope.token);
      // $scope.abc = $cookies.getObject('abc');
+     $rootScope.hnHasLoaded = false;
 
 
      var practitioner = $cookies.getObject('practitioner');

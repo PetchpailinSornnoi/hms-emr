@@ -36,7 +36,7 @@
 <div>
     <div class="row">
         <div class="col s12 m12 l12">
-            <hms-patient-demographic url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic>
+            <!-- <hms-patient-demographic url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic> -->
         </div>
     </div>
 </div>
@@ -47,9 +47,10 @@
             <ul class = "z-depth-1" tabs reload="allTabContentLoaded">
                 <li class="tab col s2"><a class="active"  href="#test1">Vital Signs</a></li>
                 <li class="tab col s2"><a href="#test2">Allergy</a></li>
-                <li class="tab col s3"><a href="#test3">Immunisation History</a></li>
+                <li class="tab col s2"><a href="#test3">Immunisation History</a></li>
                 <li class="tab col s2"><a href="#test4">Medical History</a></li>
                 <li class="tab col s2"><a href="#test5">Family History</a></li>
+                <li class="tab col s2"><a href="#labresult">Lab Result</a></li>
             </ul>
         </div>
         <div id="test1" class="col s12">
@@ -88,14 +89,21 @@
                 </div>
             </div>
         </div>
+        <div id="labresult" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                     <hms-patient-labresult url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} encounter = {{encounter}} set-code = {{setcode}}></hms-patient-labresult>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col s12 m12 l12">
        <hms-patient-labresult url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} encounter = {{encounter}} set-code = {{setcode}}></hms-patient-labresult>
     </div>
-</div>
+</div> -->
 <!--<div class="row">
    <div class="col s12 m5 l5">
        <hms-patient-demographic selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic>

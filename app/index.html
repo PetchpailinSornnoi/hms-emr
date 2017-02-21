@@ -176,17 +176,18 @@ body {
           <nav class="cyan">
               <div class="nav-wrapper">
                   <ul class="left">
-                      <span style="font-size:30px;cursor:pointer; margin-left: 25px;" onclick="nav()">&#9776;</span> 
+                      <span style="display: block; font-size:30px;cursor:pointer; margin-left: 25px; margin-top: 15%;" onclick="nav()">&#9776;</span> 
                   </ul>
-                  <ul class="right">
-                      <li>
-                         {{practitionerInfo}}
-                         <a href="#" ng-click = "logout($event)" class="logout">
+<!--                   <ul class="right"> -->
+                     <!--  <li> -->
+                          <hms-patient-demographic ng-if="hnHasLoaded" url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic> 
+                        <!--  {{practitionerInfo}} -->
+                        <!--  <a href="#" ng-click = "logout($event)" class="logout">
                                Log out
-                         </a>
-                      </li>
+                         </a> -->
+                      <!-- </li> -->
 
-                  </ul>
+                 <!--  </ul> -->
               </div>
           </nav>
 
