@@ -10,7 +10,12 @@ angular.module('myApp.view3', ['ngRoute','ngCookies'])
 // }])
 
 .controller('View3Ctrl', function($scope,$routeParams,$cookies,$window,$rootScope) {
-	var practitioner = $cookies.getObject('practitioner');
+
+    console.log($routeParams.file);
+    $scope.fileurl = "https://raw.githubusercontent.com/ivmartel/dwv/master/tests/data/"+$routeParams.file;
+    $scope.dicomURL ="DWV-Dicom/dwv/viewers/static/index.html?input="+$scope.fileurl;
+
+	var practitioner = $cookies.getObject('practitioner').practitioner;
 
     $rootScope.hnHasLoaded = false;
 

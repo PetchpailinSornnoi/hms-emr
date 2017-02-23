@@ -13,6 +13,7 @@ angular.module('myApp', [
   'hmsPatientDemographic',
   'hmsPatientVitalsigns',
   'hmsPatientLabresult',
+  'hmsPatientMedication',
   'hmsPractitionerInfo',
   'hmsLogout',
   'myApp.view1',
@@ -30,7 +31,7 @@ angular.module('myApp', [
      // $scope.token = $cookies.getObject('token');
      // console.log($scope.token);
      // $scope.abc = $cookies.getObject('abc');
-     $rootScope.hnHasLoaded = false;
+
 
 
      var practitioner = $cookies.getObject('practitioner');
@@ -81,7 +82,7 @@ angular.module('myApp', [
           templateUrl: 'login/login.html',
           controller: 'LoginCtrl'
     })
-    .when('/labresult', {
+    .when('/labresult/:file/', {
           templateUrl: 'view3/view3.html',
           controller: 'View3Ctrl'
     })

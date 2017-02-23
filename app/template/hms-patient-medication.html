@@ -1,0 +1,23 @@
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th>Quantity</th>
+                            <th>Frequency</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in patientMedication">
+                            <td>{{item.medication.name}}</td>
+                            <td>{{item.dosage.quantity}}</td>
+                            <td>{{item.dosage.frequency}}</td>
+                            <td>{{item.dosage.start_dttm | date : 'medium'}}</td>
+                            <td>{{item.dosage.end_dttm | date : 'medium'}}</td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+

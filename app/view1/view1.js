@@ -17,7 +17,9 @@ angular.module('myApp.view1', ['ngRoute','ngCookies'])
 
     $scope.showTabs = true;
 
-    var practitioner = $cookies.getObject('practitioner');
+    var practitioner = $cookies.getObject('practitioner').practitioner;
+
+    console.log(practitioner);
 
     $rootScope.practitionerInfo = practitioner.name[0].given_name+" "+practitioner.name[0].family_name+"("+practitioner.qualification+") ,"+practitioner.specialty_desc;
 

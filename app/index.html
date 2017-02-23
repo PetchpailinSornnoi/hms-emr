@@ -173,31 +173,41 @@ body {
 <body ng-controller="mainCtrl">
     <input type="hidden" value="true" id="nav-state">
       <div class="navbar-fixed" ng-show = isLogin>
-          <nav class="cyan">
+          <nav class="cyan" id = "practitioner-nav">
               <div class="nav-wrapper">
-                  <ul class="left">
-                      <span style="display: block; font-size:30px;cursor:pointer; margin-left: 25px; margin-top: 15%;" onclick="nav()">&#9776;</span> 
-                  </ul>
-<!--                   <ul class="right"> -->
-                     <!--  <li> -->
-                          <hms-patient-demographic ng-if="hnHasLoaded" url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic> 
-                        <!--  {{practitionerInfo}} -->
-                        <!--  <a href="#" ng-click = "logout($event)" class="logout">
+                  <ul class="right practitionerInfo">
+                     
+                          
+                       <li> <span> {{practitionerInfo}} </span> </li>
+                        
+                      
+                      <li>
+                        <a href="#" ng-click = "logout($event)" class="logout">
                                Log out
-                         </a> -->
-                      <!-- </li> -->
+                        </a>
+                      </li>
+                  
 
-                 <!--  </ul> -->
+                  </ul>
+                
+                   
+                 
               </div>
           </nav>
 
-          <!--<nav id="horizontal-nav" class="white hide-on-med-and-down">
-             <div class="nav-wrapper">
+          <nav id="horizontal-nav" class="white hide-on-med-and-down">
+            <ul class="left">
+                      <span style="display: block; font-size:30px;cursor:pointer; margin-left: 25px; margin-top: 15%; color: darkgray;" onclick="nav()">&#9776;</span> 
+            </ul>
+
+            <hms-patient-demographic ng-if="hnHasLoaded" url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic> 
+
+            <!--  <div class="nav-wrapper">
                   
               <div class="right blue-grey-text">SAKNAN MANOTAYA, MD (Result Doctor)</div>
               </div>  
-         
-          </nav>-->
+          -->
+          </nav>
 
           
       </div>
@@ -225,8 +235,8 @@ body {
     <ul id="nav-mobile" class="side-nav fixed" ng-if = isLogin>
                     <!--<li class="bold"><a href="view2/view2.html" class="waves-effect waves-teal">Calendar</a></li>-->
                     <li class="bold"><a href="#!/patientlist" class="waves-effect waves-teal">Patient List</a></li>
-                    <li class="bold"><a href="#" class="waves-effect waves-teal">Profile</a></li>
-                    <li class="bold"><a href="#!/labresult" class="waves-effect waves-teal">Medicals Image</a></li>
+                   <!--  <li class="bold"><a href="#" class="waves-effect waves-teal">Profile</a></li> -->
+                    <li class="bold"><a href="#!/labresult/1" class="waves-effect waves-teal">Medicals Image</a></li>
                     <!-- <li>
                         <a href="#" ng-click = "logout($event)" class="cyan-text">
                                   <span>Log out</span>
@@ -235,7 +245,7 @@ body {
                     
     </ul>
  
- <div id="main" style = "margin-top : 0px">
+ <div id="main" style = "margin-top : 70px">
     <div class="wrapper" style="height: 1000px;" >
         <div ui-layout="{flow : 'row'}">
             <!--ui-layout-container -->
@@ -304,6 +314,7 @@ function nav(){
   <script src="directive/hms-patient-demographic.js"></script>
   <script src="directive/hms-patient-vitalsigns.js"></script>
   <script src="directive/hms-patient-labresult.js"></script>
+  <script src="directive/hms-patient-medication.js"></script>
   <script src="directive/hms-practitioner-info.js"></script>
   <script src="directive/hms-logout.js"></script>
   <!---->

@@ -44,13 +44,15 @@
 <div style = "position: relative; max-height: 600px; overflow-y: auto;">
     <div class="row" ng-if="showTabs">
         <div class="col s12">
-            <ul class = "z-depth-1" tabs reload="allTabContentLoaded">
+            <ul class = "z-depth-1 patientTab" tabs reload="allTabContentLoaded">
                 <li class="tab col s2"><a class="active"  href="#test1">Vital Signs</a></li>
                 <li class="tab col s2"><a href="#test2">Allergy</a></li>
-                <li class="tab col s2"><a href="#test3">Immunisation History</a></li>
+               <!--  <li class="tab col s2"><a href="#test3">Immunisation History</a></li> -->
                 <li class="tab col s2"><a href="#test4">Medical History</a></li>
-                <li class="tab col s2"><a href="#test5">Family History</a></li>
+               <!--  <li class="tab col s2"><a href="#test5">Family History</a></li> -->
                 <li class="tab col s2"><a href="#labresult">Lab Result</a></li>
+                <li class="tab col s2"><a href="#medicalsImage">Medicals Image</a></li>
+                <li class="tab col s2"><a href="#quippenote">Quippe Note</a></li>
             </ul>
         </div>
         <div id="test1" class="col s12">
@@ -68,24 +70,29 @@
                 </div>
             </div>
         </div>
-        <div id="test3" class="col s12">
-            <div class="card">
-                <div class="card-content">
-                
-                </div>
-            </div>
-        </div>
+       
         <div id="test4" class="col s12">
             <div class="card">
                 <div class="card-content">
-                
+                    <hms-patient-medication url = "172.18.62.213/hmsgw" encounter = {{encounter}} access-token = {{token.access_token}} ></hms-patient-medication>
                 </div>
             </div>
         </div>
-        <div id="test5" class="col s12">
+     <!--    <div id="test5" class="col s12">
             <div class="card">
                 <div class="card-content">
                 
+                </div>
+            </div>
+        </div> -->
+        <div id="medicalsImage" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="collection">
+                      <!--   <a ng-href="#!/labresult/{{labresultURL}}" class="collection-item">DICOM</a> -->
+                    <a ng-href="#!/labresult/osirix-toutatix-100.dcm/">Medicals Image 1</a>
+                      
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,6 +100,17 @@
             <div class="card">
                 <div class="card-content">
                      <hms-patient-labresult url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} encounter = {{encounter}} set-code = {{setcode}}></hms-patient-labresult>
+                </div>
+            </div>
+        </div>
+
+        <div id="quippenote" class="col s12">
+            <div class="card">
+                <div class="card-content">
+ 
+                    <iframe ng-src="{{trustSrc(quippeURL.src)}}"> 
+                        <p>Your browser does not support iframes.</p>
+                    </iframe>
                 </div>
             </div>
         </div>

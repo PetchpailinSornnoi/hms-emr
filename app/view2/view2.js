@@ -9,7 +9,16 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
 //   });
 // }])
 
-.controller('View2Ctrl', function($scope,$routeParams,$cookies,$window,$rootScope) {
+.controller('View2Ctrl', function($scope,$routeParams,$cookies,$window,$rootScope, $sce) {
+
+    // console.log($rootScope.userAuthen);
+    // console.log($rootScope.passAuthen);
+
+    // $scope.medicalimageurl = encodeURIComponent("https://raw.githubusercontent.com/ivmartel/dwv/master/tests/data/osirix-toutatix-100.dcm");
+    // console.log($scope.medicalimageurl);
+    $scope.patientId = $routeParams.patientId;
+    $scope.encounter = $routeParams.encounter;
+
 
     $rootScope.hnHasLoaded = true;
 
@@ -22,7 +31,7 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
 
     $scope.showTabs = true;
 
-    var practitioner = $cookies.getObject('practitioner');
+    var practitioner = $cookies.getObject('practitioner').practitioner;
 
     // console.log(practitioner);
 
@@ -41,5 +50,13 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
         alert("test");
         $window.location.href = '../DWV-Dicom/dwv/viewers/static/index.html';
     }
-    
+
+
+    //$scope.quippeURL = "http://10.103.10.61:9100/BDMSDefault.htm?cookieID=1478572578212&patientId="+$routeParams.patientId+"&episodeNumber="+$routeParams.encounter;
+    $scope.trustSrc = function(src) {
+        return $sce.trustAsResourceUrl(src);
+    }
+
+    $scope.quippeURL = {src:"http://10.103.10.61:9100/BDMSDefault.htm?cookieID=1478572578212&patientId="+$routeParams.patientId+"&episodeNumber="+$routeParams.encounter, title:"Quippe"};
+
 });
