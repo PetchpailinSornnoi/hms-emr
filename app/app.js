@@ -19,6 +19,7 @@ angular.module('myApp', [
   'myApp.view1',
   'myApp.view2',
   'myApp.view3',
+  'myApp.medcinsearch',
   'myApp.login',
   'myApp.version'
 ])
@@ -82,9 +83,17 @@ angular.module('myApp', [
           templateUrl: 'login/login.html',
           controller: 'LoginCtrl'
     })
-    .when('/labresult/:file/', {
+    .when('/labresult/:patientId/:encounter/:file/', {
           templateUrl: 'view3/view3.html',
           controller: 'View3Ctrl'
+    })
+    // .when('/labresult/', {
+    //       templateUrl: 'view3/view3.html',
+    //       controller: 'View3Ctrl'
+    // })
+    .when('/medcinsearch', {
+          templateUrl: 'medcinsearch/medcinsearch.html',
+          controller: 'medcinsearchCtrl'
     })
 
 

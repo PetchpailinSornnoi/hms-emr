@@ -176,22 +176,13 @@ body {
           <nav class="cyan" id = "practitioner-nav">
               <div class="nav-wrapper">
                   <ul class="right practitionerInfo">
-                     
-                          
-                       <li> <span> {{practitionerInfo}} </span> </li>
-                        
-                      
+                      <li> <span> {{practitionerInfo}} </span> </li>
                       <li>
                         <a href="#" ng-click = "logout($event)" class="logout">
                                Log out
                         </a>
                       </li>
-                  
-
-                  </ul>
-                
-                   
-                 
+                  </ul> 
               </div>
           </nav>
 
@@ -234,9 +225,15 @@ body {
 
     <ul id="nav-mobile" class="side-nav fixed" ng-if = isLogin>
                     <!--<li class="bold"><a href="view2/view2.html" class="waves-effect waves-teal">Calendar</a></li>-->
-                    <li class="bold"><a href="#!/patientlist" class="waves-effect waves-teal">Patient List</a></li>
+                    <li class="bold"><a href="#!/patientlist" class="waves-effect waves-teal">Patient List</a>
+                        <ul ng-if="isSelectedHn">
+                           <li class="bold"><a ng-href="#!/patient/{{patientId}}/{{encounter}}" class="waves-effect waves-teal">View Current Patient</a>
+                        </ul>
+
+                    </li>
                    <!--  <li class="bold"><a href="#" class="waves-effect waves-teal">Profile</a></li> -->
-                    <li class="bold"><a href="#!/labresult/" class="waves-effect waves-teal">Medicals Image</a></li>
+                   <!--  <li class="bold"><a href="#!/labresult/" class="waves-effect waves-teal">Medicals Image</a></li> -->
+                    <li class="bold"><a href="#!/medcinsearch" class="waves-effect waves-teal">Medcin Search</a></li>
                     <!-- <li>
                         <a href="#" ng-click = "logout($event)" class="cyan-text">
                                   <span>Log out</span>
@@ -301,6 +298,7 @@ function nav(){
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
   <script src="view3/view3.js"></script>
+  <script src="medcinsearch/medcinsearch.js"></script>
   <script src="login/login.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>

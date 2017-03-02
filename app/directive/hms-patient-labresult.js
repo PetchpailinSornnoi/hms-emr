@@ -17,8 +17,8 @@ angular.module('hmsPatientLabresult', ["ngCookies"])
                   // Observation/labresult/09-17-001101/O09-17-048651/N620?pretty=true
                   $http({
                     method : "GET",
-                    //url: "http://"+$scope.url+"/Observation/labresult/"+$scope.selectedPatient+"/"+$scope.en+"/"+$scope.setCode;
-                    url: "http://"+$scope.url+"/Observation/labresult/09-17-001101/O09-17-048651/N620",
+                    url: "http://"+$scope.url+"/Observation/labresult/"+$scope.selectedPatient+"/"+$scope.en+"/"+$scope.setCode,
+                    // url: "http://"+$scope.url+"/Observation/labresult/09-17-001101/O09-17-048651/N620",
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"
