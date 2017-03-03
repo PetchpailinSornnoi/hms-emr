@@ -50,12 +50,13 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
 
     $http({
             method : "GET",
-            url: "http://172.18.62.213/hmsgw/Dicom/list/name",
+            url: "http://172.18.62.213/hmsgw/Dicom/list",
             headers: {
                 'Authorization': 'Bearer '+$rootScope.token.access_token,
                 "Access-Control-Allow-Origin": "*"
             },
         }).then(function mySuccess(response) {
+            //$scope.dicomFile = response.data;
             $scope.dicomFile = response.data;
         }, function myError(response) {
             $scope.error = response.statusText;

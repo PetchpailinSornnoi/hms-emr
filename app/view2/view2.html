@@ -88,20 +88,15 @@
         <div id="medicalsImage" class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <div class="collection">
-                      <!--   <a ng-href="#!/labresult/{{labresultURL}}" class="collection-item">DICOM</a> -->
-                    
-                    <div class="row">
-                        <div class="col s12">
-                           <li ng-repeat = "file in dicomFile.data">
+                    <div class="row" ng-repeat = "file in dicomFile.data">
+                        <div class="col s2 m2">
+                            <img ng-src = "http://172.18.62.213/hmsgw/Dicom/img/{{file}}">
+                        </div>
+                        <div class="col s12 m7">
                             <a ng-href="#!/labresult/{{patientId}}/{{encounter}}/{{file}}">{{file}}
                             </a>
-                           </li>
                         </div>
-                      
-                    </div>
-                      
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>
