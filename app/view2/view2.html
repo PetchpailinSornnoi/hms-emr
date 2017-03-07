@@ -44,15 +44,16 @@
 <div style = "position: relative; max-height: 600px; overflow-y: auto;">
     <div class="row" ng-if="showTabs">
         <div class="col s12">
-            <ul class = "z-depth-1 patientTab" tabs reload="allTabContentLoaded">
-                <li class="tab col s2"><a class="active"  href="#test1">Vital Signs</a></li>
-                <li class="tab col s2"><a href="#test2">Allergy</a></li>
+            <ul class = "z-depth-1 patientTab" tabs reload="allTabContentLoaded" style = "height: 70px;">
+                <li class="tab"><a class="active"  href="#test1">Vital Signs</a></li>
+                <li class="tab"><a href="#test2">Allergy</a></li>
                <!--  <li class="tab col s2"><a href="#test3">Immunisation History</a></li> -->
-                <li class="tab col s2"><a href="#test4">Medical History</a></li>
+                <li class="tab"><a href="#test4">Medical History</a></li>
                <!--  <li class="tab col s2"><a href="#test5">Family History</a></li> -->
-                <li class="tab col s2"><a href="#labresult">Lab Result</a></li>
-                <li class="tab col s2"><a href="#medicalsImage">Medicals Image</a></li>
-                <li class="tab col s2"><a href="#quippenote">Quippe Note</a></li>
+                <li class="tab"><a href="#labresult">Lab Result</a></li>
+                <li class="tab"><a href="#medicalsImage">Medicals Image</a></li>
+                <li class="tab"><a href="#quippenote">Quippe Note</a></li>
+                <li class="tab"><a href="#medcin">Medcin Intelligence</a></li>
             </ul>
         </div>
         <div id="test1" class="col s12">
@@ -112,9 +113,19 @@
             <div class="card">
                 <div class="card-content">
  
-                    <!-- <iframe ng-src="{{trustSrc(quippeURL.src)}}"> 
+                    <iframe ng-src="{{trustSrc(quippeURL.src)}}"> 
                         <p>Your browser does not support iframes.</p>
-                    </iframe> -->
+                    </iframe>
+
+                    
+
+                </div>
+            </div>
+        </div>
+        <div id="medcin" class="col s12">
+            <div class="card">
+                <div class="card-content">
+ 
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <iframe ng-src = "Medcin/index.html" height="1000px">

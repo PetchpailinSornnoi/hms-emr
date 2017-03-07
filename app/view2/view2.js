@@ -45,8 +45,7 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
         return $sce.trustAsResourceUrl(src);
     }
 
-    $scope.quippeURL = {src:"http://172.18.62.227:9100/BDMSDefault.htm?patientId="+$routeParams.patientId+"&episodeNumber="+$routeParams.encounter, title:"Quippe"};
-     
+    $scope.quippeURL = {src:"http://172.18.62.227:9100/", title:"Quippe"};
 
     $http({
             method : "GET",
@@ -62,3 +61,6 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
             $scope.error = response.statusText;
     }); 
 });
+     
+
+    
