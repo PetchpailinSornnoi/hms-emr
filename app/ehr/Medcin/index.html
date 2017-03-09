@@ -1,0 +1,192 @@
+<html>
+
+
+<head>
+
+<!-- Required Stylesheets -->
+<link href="bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap-treeview.min.css" rel="stylesheet">
+
+<!-- Required Javascript -->
+<script src="jquery-1.11.2.min.js"></script>
+<script src="bootstrap-treeview.min.js"></script>
+<script src="angular.min.js"></script>
+
+</head>
+<body ng-app="decisionsupport" ng-controller="control">
+
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+         HMS Medcin Intelligence
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+
+
+<div class="container"> 
+<div class="row" style="height:40%; width:100%">
+
+   <h1> Search </h1>
+   <div class="input-group" style="width:100%">
+       <input name="search" class="form-control" id="search" placeholder="Search" style="width:100%"  ng-model="search"> </input>
+   </div>
+    <br>
+    <div class="input-group" style="width:100%">
+        <select id="type" class="form-control" style="width:100%" ng-model="term">
+<option value="1">Symptom</option><option value="2">Physical</option><option value="3">Test</option><option value="5">History</option><option value="6">Disease</option><option value="7">Therapy</option>
+        </select>
+ 
+    
+   </div>
+    
+    <br>
+    
+
+    <button class="btn btn-warning" type="button"  data-toggle="modal" data-target="#Intelligence" ng-click="medcinsearch()">Search All</button>
+    <button class="btn btn-primary" type="button" ng-click="intelligencesearch()"   data-toggle="modal" data-target="#Intelligence">Intelligent Search</button>
+    <button class="btn btn-info" type="button" ng-click="clear()">Clear</button>
+
+
+  <hr>
+
+   <ul id="Symtom List" >
+            <li ng-repeat="list in selectlist" class="list-group-item list-group-item-{{colour[list.type]}}">
+                   <span class="badge" ng-click="deleteselect(list.medcinId)">Delete</span>
+                  [ {{datatype[list.type]}} ] {{list.text}}
+            </li>
+   </ul>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="Intelligence" tabindex="-1" role="dialog" aria-labelledby="Label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="select_title">{{modalheader}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+          <a href="#" class="list-group-item" data-dismiss="modal" ng-repeat="list in lists" ng-click="add_data(list)">{{list.text}}</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Required Javascript -->
+<script src="jquery-1.11.2.min.js"></script>
+<script src="bootstrap-treeview.min.js"></script>
+<script src="angular.min.js"></script>
+<script src="bootstrap.min.js"></script>
+
+
+<!-- Angular Get Data -->
+<script>
+    
+
+
+var app = angular.module("decisionsupport", []);
+
+app.controller("control", function($scope, $http) 
+    {
+        $scope.colour = ["","success","info","warning","danger","","warning","danger","primary"];
+        $scope.datatype = ["All","Symtom","Physical","Test","","History","Disease","Therapy"];
+        $scope.selectlist = [];
+    
+        $scope.clear = function(){
+          $scope.selectlist = [];
+        };
+        $scope.medcinsearch = function() {
+            //alert("http://172.18.62.227:9100/ws.aspx/Medcin/Search?Query="+$scope.search+"&CodeFilter=0&GroupBy=0&TermType="+$scope.term+"&DataFormat=2&Culture=en-US");
+            $http.get("http://172.18.62.213/quippe/ws.aspx/Medcin/Search?Query="+$scope.search+"&CodeFilter=0&GroupBy=0&TermType="+$scope.term+"&DataFormat=2&Culture=en-US") .then(function(response) {
+            //$http.get("http://172.18.62.227:9100/ws.aspx/Medcin/Search?Query=Head&CodeFilter=0&GroupBy=0&TermType=0&DataFormat=2&Culture=en-US") .then(function(response) {
+               $scope.lists = response.data.termList;
+               $scope.modalheader = $scope.search
+        });
+        
+        $scope.add_data = function(data){
+            data.type = $scope.term;
+            //$scope.selectlist.push(data);
+            var i;
+            for(i=0; i<$scope.selectlist.length; i++){
+              if($scope.selectlist[i].type == data.type){
+                $scope.selectlist.splice(i, 0, data);
+                break;
+              }
+            }
+            if(i == $scope.selectlist.length)
+                  $scope.selectlist.push(data);
+        }
+        
+
+        $scope.deleteselect = function(data){
+            for(i=0; i<  $scope.selectlist.length; i++){
+              if($scope.selectlist[i].medcinId == data){
+                $scope.selectlist.splice(i,1);
+              }
+            }
+        }
+        
+        $scope.intelligencesearch = function(){
+            var request_body =  "<Patient><Encounters><Encounter><Records>";
+            listsize = $scope.selectlist.length;
+            for(i=0; i<listsize ; i++)
+                request_body += '<Record MedcinId="'+$scope.selectlist[i].medcinId+'"/>'
+            request_body += '</Records></Encounter></Encounters></Patient>';
+            
+            var formdat = new FormData();
+            formdat.append("chart", request_body);
+
+            var settings = {
+              "async": true,
+              "crossDomain": true,
+              "url": "http://172.18.62.213/quippe/ws.aspx/Medcin/IntelligentPrompt?ListSize=1&GroupBy=0&TermType="+$scope.term+"&DataFormat=2&Culture=en-US",
+              "method": "POST",
+              "headers": {
+                "cache-control": "no-cache",
+              },
+              "processData": false,
+              "contentType": false,
+              "mimeType": "multipart/form-data",
+              "data": formdat
+            }
+
+           
+            $.ajax(settings).done(function (response) {
+               var data_list = JSON.parse(response).termList.term;
+                $scope.lists =  data_list;
+                $scope.modalheader = "Suggestions";
+                $scope.$apply();
+               //console.log(JSON.parse(response)); 
+            });
+            
+           
+
+             
+        }
+    }
+});
+
+
+
+</script>
+
+
+
+
+</body>
+
+</html>

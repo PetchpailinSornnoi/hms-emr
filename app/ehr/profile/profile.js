@@ -1,0 +1,13 @@
+'use strict';
+
+angular.module('myApp.login', ['ngRoute'])
+
+.controller('LoginCtrl', function($scope,$rootScope,$cookies) {
+
+	$scope.$on('token', function (event, result) {
+         $scope.tokenHasLoaded = true;
+         $scope.preload = true;
+         $scope.token = result.data;
+    });
+
+});

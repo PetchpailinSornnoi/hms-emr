@@ -1,0 +1,22 @@
+<!-- <div style = "display: block; margin-left: 20%";>
+    <span>
+        <img id = "patientImage" data-ng-src="{{'data:image/png;base64,'+patient.photo}}" >
+        <span style="margin-left: 12%;" class = "black-text">{{patient.name[0].given_name}} {{patient.name[0].family_name}} , {{selectedPatient}} , {{patient.birth_date}}
+        </span>
+    </span>
+</div>
+-->
+<div>
+    <div class="col-md-3">
+        <div class="patient-pic" style="background: url(data:image/png;base64,{{patient.photo}}); background-size: 160px; background-position: center top;";> </div>
+    </div>
+    <div class="col-md-6">
+        <div class="patient-info">
+            <h4 id="patient-name">{{patient.name[0].given_name}} {{patient.name[0].family_name}}</h4>
+            <p>HN: <span> {{selectedPatient}} </span></p>
+            <p>Age: <span class="patient-age">{{age}}</span></p>
+            <p>Gender: <span id="patient-gender">{{patient.gender}}</span></p>
+            <p>DOB: <span class="patient-dob">{{patient.birth_date}}</span></p>
+        </div>
+    </div>
+</div>

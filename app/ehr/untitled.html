@@ -1,0 +1,48 @@
+<div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Blood Pressure:</p>
+                            <div class="value last-bp" ng-repeat="item in patientVitalsigns" ng-if=item.code.set_desc=="BloodPressure">{{item.value}} mm[Hg]</div>
+                        </div>
+                        <div class="col-md-4 centered">
+                            <div class="progress">
+                                <div class="progress-bar" id = "bp-systolic" ng-style="width: {{item.value}}%;""></div>
+                            </div>
+                            <p>(Systolic)</p>
+                        </div>
+                        <div class="col-md-4 centered">
+                            <div class="progress">
+                                <div class="progress-bar" id = "bp-diastolic" ng-style="width: {{item.value}}%;"></div>
+                            </div>
+                            <p>(Diastolic)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Oxygen Saturation:</p>
+                            <div class="value last-spo2" ng-repeat="item in patientVitalsigns" ng-if=item.code.set_desc=="OxygenSaturation">{{item.value}}%</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success bar-spo2" id = "oxy-sat" ng-repeat="item in patientVitalsigns" ng-if=item.code.set_desc=="OxygenSaturation" ng-style="width: {{item.value}}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img class="patient-height-image" ng-src="{{genderimageurl}}" alt="Body">
+            <div class="patient-height-stats">
+                <p>Height:</p>
+                <div class="value" ng-repeat="item in patientVitalsigns" ng-if=item.code.set_desc=="Height">
+                    <span class="height-placeholder-value">{{item.value}}</span> <span class="height-placeholder-unit">cm</span>
+                </div>
+            </div>
+        </div>

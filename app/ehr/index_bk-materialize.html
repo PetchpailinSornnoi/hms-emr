@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>HMS EMR</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-layout/ui-layout.css"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="css/mystyle-horizontal.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- ... -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materializecss-icon.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script type="text/javascript" src="bower_components/raf/index.js"></script>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<style>
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    /*width: 0;*/
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 1;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    margin-left: 250px;
+    margin-top: 80px;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.wrapper {
+    position: relative;
+    top: 0px;
+    height: 700px;
+}
+.content-back {
+    /*background : #eee url("http://placehold.it/400x300/eee/666&text=content") no-repeat center;*/
+}
+.footer-back {
+    /*position: fixed;
+    bottom: 0;*/
+    /*top: 400px;*/
+    background : #eee url("http://placehold.it/400x300/eee/666&text=footer") no-repeat center;
+}
+.js-back {
+    background : #eee url("http://placehold.it/400x300/eee/666") no-repeat center;
+}
+
+/*.tabs .tab a {
+    color: rgba(238, 110, 115, 0.7);
+    display: block;
+    width: 100%;
+    height: 50%; 
+    padding: 0px 20px;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: color .28s ease;
+    transform: rotate(-90deg);
+}*/
+
+/*.tabs .tab {
+    display: inline-block;
+    text-align: justify;
+    line-height: 30px;
+    height: 150px;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+}*/
+/*.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: #b1dcfb;
+    color: #26a69a;
+}*/
+/*.tabs .tab a {
+    color: rgba(238, 110, 115, 0.7);
+    display: block;
+    width: 100%;
+    height: 50%; 
+    padding: 0px 20px;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: color .28s ease;
+    transform: rotate(-90deg);
+}*/
+/*#md-toolbar{
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+    font-size: 20px;
+    min-height: 64px;
+    width: 100%;
+}*/
+.ui-layout-row > .ui-splitbar {
+    height: 8px;
+    width: 100%;
+    cursor: row-resize;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    /*position: fixed;*/
+    /*bottom: 0 !important*/
+}
+
+/*.tabs {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 48px;
+    width: 100%;
+    background-color: #fff;
+    margin: 0 auto;
+    white-space: nowrap;
+}*/
+
+.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .collapsible, .side-nav {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+}
+
+
+</style>
+<body ng-controller="mainCtrl">
+    <input type="hidden" value="true" id="nav-state">
+      <div class="navbar-fixed" ng-show = isLogin>
+          <nav class="cyan" id = "practitioner-nav">
+              <div class="nav-wrapper">
+                  <ul class="right practitionerInfo">
+                      <li> <span> {{practitionerInfo}} </span> </li>
+                      <li>
+                        <a href="#" ng-click = "logout($event)" class="logout">
+                               Log out
+                        </a>
+                      </li>
+                  </ul> 
+              </div>
+          </nav>
+
+          <nav id="horizontal-nav" class="white hide-on-med-and-down">
+            <ul class="left">
+                      <span style="display: block; font-size:30px;cursor:pointer; margin-left: 25px; margin-top: 15%; color: darkgray;" onclick="nav()">&#9776;</span> 
+            </ul>
+
+            <hms-patient-demographic ng-if="hnHasLoaded" url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic> 
+
+            <!--  <div class="nav-wrapper">
+                  
+              <div class="right blue-grey-text">SAKNAN MANOTAYA, MD (Result Doctor)</div>
+              </div>  
+          -->
+          </nav>
+
+          
+      </div>
+
+ 
+    <!--<span id="mySidenav" class="sidenav">
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#!/view1">view1</a>
+        <a href="#!/view2">view2</a>
+        <a href="#">Contact</a>
+    </span>-->
+
+    <!--Demographics
+    Social History
+    Immunisation History
+    Medical History
+    Family History
+    Allergies
+    Vital signs
+    Prescription
+    Lab Results-->
+
+    <ul id="nav-mobile" class="side-nav fixed" ng-if = isLogin>
+                    <!--<li class="bold"><a href="view2/view2.html" class="waves-effect waves-teal">Calendar</a></li>-->
+                    <li class="bold"><a href="#!/patientlist" class="waves-effect waves-teal">Patient List</a>
+                        <ul ng-if="isSelectedHn">
+                           <li class="bold"><a ng-href="#!/patient/{{patientId}}/{{encounter}}" class="waves-effect waves-teal">View Current Patient</a>
+                        </ul>
+
+                    </li>
+                   <!--  <li class="bold"><a href="#" class="waves-effect waves-teal">Profile</a></li> -->
+                   <!--  <li class="bold"><a href="#!/labresult/" class="waves-effect waves-teal">Medicals Image</a></li> -->
+                   <!--  <li class="bold"><a href="#!/medcinsearch" class="waves-effect waves-teal">Medcin Search</a></li> -->
+                    <!-- <li>
+                        <a href="#" ng-click = "logout($event)" class="cyan-text">
+                                  <span>Log out</span>
+                        </a>
+                    </li>    -->
+                    
+    </ul>
+ 
+ <div id="main" style = "margin-top : 70px">
+    <div class="wrapper" style="height: 1000px;" >
+        <div ui-layout="{flow : 'row'}">
+            <!--ui-layout-container -->
+            <!--<div style = "overflow-y: hidden; position: fixed;"><div ng-view></div></div>-->
+            <div><div ng-view></div></div>
+            <!--<div ui-layout-container class=" footer-back" size="20%"></div>-->
+        </div>
+    </div>
+ </div>
+
+
+  <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-layout/ui-layout.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script>
+
+function nav(){
+   var currentvalue = document.getElementById('nav-state').value;
+  
+   if(currentvalue === "true"){
+       document.getElementById('nav-state').value = "false";
+       document.getElementById("nav-mobile").style.width = "0";
+       document.getElementById("main").style.marginLeft= "0";
+   }else{
+       document.getElementById('nav-state').value = "true";
+       document.getElementById("nav-mobile").style.width = "250px";
+       document.getElementById("main").style.marginLeft = "250px";
+   }
+}
+// function openNav() {
+//     // open = false;
+//     //console.log(document.getElementById("mySidenav").style.width);
+//     document.getElementById("mySidenav").style.width = "250px";
+//     // document.getElementById("main").style.marginLeft = "250px";
+// }
+
+// function closeNav() {
+//     document.getElementById("mySidenav").style.width = "0";
+//     // document.getElementById("main").style.marginLeft= "0";
+// }
+//angular.module('myApp', ['ui.layout']);
+</script>
+
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/angular-materialize.min.js"></script>
+  
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <!--<script src="bower_components/angular-ui-router/release/angular-ui-route.js"></script>-->
+
+
+  <script src="app.js"></script>
+  <script src="view1/view1.js"></script>
+  <script src="view2/view2.js"></script>
+  <script src="view3/view3.js"></script>
+  <script src="medcinsearch/medcinsearch.js"></script>
+  <script src="login/login.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+
+  <!--HMS Directive-->
+  <script src="directive/hms-auth.js"></script>
+  <script src="directive/hms-app-auth.js"></script>
+  <script src="directive/hms-patient-list.js"></script>
+  <script src="directive/hms-patient-allergy.js"></script>
+  <script src="directive/hms-patient-demographic.js"></script>
+  <script src="directive/hms-patient-vitalsigns.js"></script>
+  <script src="directive/hms-patient-labresult.js"></script>
+  <script src="directive/hms-patient-medication.js"></script>
+  <script src="directive/hms-practitioner-info.js"></script>
+  <script src="directive/hms-logout.js"></script>
+  <!---->
+</body>
+</html>

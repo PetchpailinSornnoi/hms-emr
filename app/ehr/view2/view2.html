@@ -1,0 +1,210 @@
+<!-- 
+
+<div style = "position: relative; max-height: 600px; overflow-y: auto;">
+    <div class="row" ng-if="showTabs">
+        <div class="col s12">
+            <ul class = "z-depth-1 patientTab" tabs reload="allTabContentLoaded">
+                <li class="tab col s2"><a class="active"  href="#test1">Vital Signs</a></li>
+                <li class="tab col s2"><a href="#test2">Allergy</a></li>
+                <li class="tab col s2"><a href="#test3">Immunisation History</a></li>
+                <li class="tab col s2"><a href="#test4">Medical History</a></li>
+                <li class="tab col s2"><a href="#test5">Family History</a></li>
+                <li class="tab col s2"><a href="#labresult">Lab Result</a></li>
+                <li class="tab col s2"><a href="#medicalsImage">Medicals Image</a></li>
+                <li class="tab col s2"><a href="#quippenote">Quippe Note</a></li>
+            </ul>
+        </div>
+        <div id="test1" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                <hms-patient-vitalsigns url = "172.18.62.213/hmsgw" encounter = {{encounter}} selected-patient = {{patientId}} access-token = {{token.access_token}}></hms-patient-vitalsigns>
+                </div>
+            
+            </div>
+        </div>
+        <div id="test2" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                <hms-patient-allergy url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-allergy>
+                </div>
+            </div>
+        </div>
+       
+        <div id="test4" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <hms-patient-medication url = "172.18.62.213/hmsgw" encounter = {{encounter}} access-token = {{token.access_token}} ></hms-patient-medication>
+                </div>
+            </div>
+        </div> -->
+     <!--    <div id="test5" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                
+                </div>
+            </div>
+        </div> -->
+<!--         <div id="medicalsImage" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row" ng-repeat = "file in dicomFile.data">
+                        <div class="col s2 m2">
+                            <img ng-src = "http://172.18.62.213/hmsgw/Dicom/img/{{file}}">
+                        </div>
+                        <div class="col s12 m7">
+                            <a ng-href="#!/labresult/{{patientId}}/{{encounter}}/{{file}}">{{file}}
+                            </a>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <div id="labresult" class="col s12">
+            <div class="card">
+                <div class="card-content">
+                     <hms-patient-labresult url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} encounter = {{encounter}} set-code = {{setcode}}></hms-patient-labresult>
+                </div>
+            </div>
+        </div>
+
+        <div id="quippenote" class="col s12">
+            <div class="card">
+                <div class="card-content"> -->
+ 
+                    <!-- <iframe ng-src="{{trustSrc(quippeURL.src)}}"> 
+                        <p>Your browser does not support iframes.</p>
+                    </iframe> -->
+<!--                     <div class="row">
+                        <div class="col s12 m12 l12">
+                            <iframe ng-src = "Medcin/index.html" height="1000px">
+                                 <p>Your browser does not support iframes.</p>
+                            </iframe>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+            <div class="col-md-9">
+
+              <!-- Demographics -->
+                <div class="well demographics" style="position: relative">
+                    <div class="row">
+                        <hms-patient-demographic url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} >                   
+                        </hms-patient-demographic> 
+
+                        <div class="col-md-3">
+                            <div class="ver-spacer left">
+                                <div class="mask"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--Vital Signs -->
+                <div class="patient-stats well" style="position: relative">
+                     <hms-patient-vitalsigns url = "172.18.62.213/hmsgw" encounter = {{encounter}} selected-patient = {{patientId}} access-token = {{token.access_token}}></hms-patient-vitalsigns>
+                     
+                    
+                </div>
+
+            
+
+            <div class = "patient-records">
+              <!-- Laboratory Results -->
+                <div class="panel panel-info" style="width: 97%;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Laboratory Results
+                            
+                        </h3>
+                    </div>
+                    <div class="panel-body" style="height: auto;">
+                         <hms-patient-labresult url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} encounter = {{encounter}} access-token = {{token.access_token}} set-code = {{setcode}}></hms-patient-labresult>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="last-measurement">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Image -->
+                <div class="panel panel-warning" style="width: 97%;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Medical Image
+                            
+                        </h3>
+                    </div>
+                    <div class="panel-body" style="height: auto;">
+                        <hms-patient-dicom url = "172.18.62.213/hmsgw" access-token = {{token.access_token}} selected-patient = {{patientId}} encounter = {{encounter}}></hms-patient-dicom>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="last-measurement">
+                        </div>
+                    </div>
+                </div>
+          </div>
+
+
+            </div>
+            <!-- col -->
+            <div class="col-md-3">
+               <!-- Allergy -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Allergies</h3>
+                    </div>
+                    <div class="panel-body">
+                        <hms-patient-allergy url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-allergy>
+                    </div>
+                </div>
+
+                <!-- Medications -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Medications</h3>
+                    </div>
+                    <div class="panel-body" style="max-height: 160px; overflow-y: scroll;">
+                         <hms-patient-medication url = "172.18.62.213/hmsgw" encounter = {{encounter}} access-token = {{token.access_token}} ></hms-patient-medication>
+                    </div>
+                </div>
+
+                <!-- ​Problems -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Problems</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="problems">
+                            <li>Conductive hearing loss, bilateral</li>
+                            <li>Respiratory syncytial virus pneumonia</li>
+                            <li>Acute amoebic dysentery</li>
+                            <li>Superficial frostbite of neck</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quippe Note -->
+                <a href="#!/quippenote/{{patientId}}/{{encounter}}"><div class="well">Quippe Note</div></a>
+
+                <!-- Medcin Intelligence -->
+                <a href="#!/medcinsearch"><div class="well">Medcin Intelligence</div></a>
+
+            </div>
+            <!-- col -->
+        </div>
+        <!-- row -->
+
+
+
+
+
+
+
+
+
