@@ -1,0 +1,88 @@
+<div>
+<!--     <table class="striped sky">
+        <thead class="sky">
+            <tr>
+                <th data-field="codeDesc"> Code Description</th>
+                <th data-field="value">Value</th>
+                <th data-field="unit">Unit</th>
+                <th data-field="Date Issued">DateTime Issued</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in patientVitalsigns" ng-if=item.value!=="">
+                <td>{{item.code.set_desc}} </td>
+                <td>{{item.value}}</td>
+                <td>{{item.unit}}</td>
+                <td>{{item.issued | date : 'medium'}}</td>
+            </tr>
+        </tbody>
+    </table> -->
+    <div class="row" >
+        <div class="col-md-8 bordered">
+            <div class="row" style="min-height: 67px;">
+                <div class="col-md-4 bordered centered">
+                    <p>Age:</p>
+                    <div class="value patient-age-years">{{age}}</div>
+                </div>
+                <div class="col-md-4 bordered  centered">
+                    <p>Weight:</p>
+                    <div class="value" ng-repeat="item in patientVitalsigns" ng-if=item.code.set_desc=="Weight">
+                        <span class="weight-placeholder-value">{{item.value}}</span> <span class="weight-placeholder-unit">kg</span>
+                    </div>
+                </div>
+                <div class="col-md-4 centered">
+                    <p>BMI:</p>
+                    <div class="value patient-bmi" ng-repeat="item in patientVitalsigns" ng-if=item.code.set_desc=="BMI">{{item.value}} kg/m2<span class="bmi-details">{{_getStatus(item.value)}}</span></div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Blood Pressure:</p>
+                            <div class="value last-bp">88/70 mm[Hg]</div>
+                        </div>
+                        <div class="col-md-4 centered">
+                            <div class="progress">
+                                <div class="progress-bar" id = "bp-systolic" style="width: 88%;"></div>
+                            </div>
+                            <p>(Systolic)</p>
+                        </div>
+                        <div class="col-md-4 centered">
+                            <div class="progress">
+                                <div class="progress-bar" id = "bp-diastolic" style="width: 70%;"></div>
+                            </div>
+                            <p>(Diastolic)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Oxygen Saturation:</p>
+                            <div class="value last-spo2">97.50%</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success bar-spo2" id = "oxy-sat" style="width: 97.5%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img class="patient-height-image" ng-src="{{genderimageurl}}" alt="Body">
+            <div class="patient-height-stats">
+                <p>Height:</p>
+                <div class="value" ng-repeat="item in patientVitalsigns" ng-if=item.code.set_desc=="Height">
+                    <span class="height-placeholder-value">{{item.value}}</span> <span class="height-placeholder-unit">cm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

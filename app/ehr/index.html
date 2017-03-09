@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>HMS EMR</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-layout/ui-layout.css"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="css/mystyle-horizontal.css">
+  <link rel="stylesheet" href="css/style.css"> -->
+  <link rel="stylesheet" href="css/site.min.css">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+  <!-- ... -->
+<!--   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  <!-- <link href="css/materializecss-icon.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+  <script type="text/javascript" src="bower_components/raf/index.js"></script>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<style>
+  .patient-pic{
+      border: 3px solid #E6E9ED;
+      display: block;
+      height: 125px;
+      margin: 25px auto;
+      width: 125px;
+      border-radius: 50%;
+      -webkit-transition: all 0.2s ease-out;
+    }
+
+    .bordered {
+      border-right: 1px solid #eee;
+    }
+
+    .patient-stats p {
+      margin: 0;
+      color: #999;
+    }
+
+    .patient-stats .centered .value {
+      font-size: 20px;
+    }
+
+    .patient-stats .value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    span.bmi-details {
+      display: block;
+      font-size: 10px;
+      color: #DA4453;
+    }
+
+    .patient-height-image {
+      position: absolute;
+      top: 10px;
+      left: 60px;
+    }
+
+    .patient-height-stats {
+      position: absolute;
+      top: 98px;
+      left: 118px;
+    }
+
+    .patient-records .panel-title{
+      font-size: 22px;
+      font-family: 'Open Sans';
+      font-weight: 300;
+    }
+</style>
+<body ng-controller="mainCtrl" style="background-color: #f1f2f6;">
+    <div class="docs-header">
+        <!--nav-->
+      <nav class="navbar navbar-default navbar-custom" role="navigation" ng-show = isLogin>
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><!-- <img src="#" height="40"> --></a>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+              <li><a class="nav-link" href="#!/patientlist">Patient List</a></li>
+              <li ng-if="isSelectedHn"><a class="nav-link" ng-href="#!/patient/{{patientId}}/{{encounter}}">View Current Patient</a></li>
+              
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class = "pull-right">
+                  <a href="#" ng-click = "logout($event)" class="logout">
+                      Log out
+                  </a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!--  Header -->
+    <div class="container" style="padding-top: 30px;">
+        <div ng-view></div>
+    </div>
+    
+
+
+  <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-layout/ui-layout.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script>
+
+function nav(){
+   var currentvalue = document.getElementById('nav-state').value;
+  
+   if(currentvalue === "true"){
+       document.getElementById('nav-state').value = "false";
+       document.getElementById("nav-mobile").style.width = "0";
+       document.getElementById("main").style.marginLeft= "0";
+   }else{
+       document.getElementById('nav-state').value = "true";
+       document.getElementById("nav-mobile").style.width = "250px";
+       document.getElementById("main").style.marginLeft = "250px";
+   }
+}
+// function openNav() {
+//     // open = false;
+//     //console.log(document.getElementById("mySidenav").style.width);
+//     document.getElementById("mySidenav").style.width = "250px";
+//     // document.getElementById("main").style.marginLeft = "250px";
+// }
+
+// function closeNav() {
+//     document.getElementById("mySidenav").style.width = "0";
+//     // document.getElementById("main").style.marginLeft= "0";
+// }
+//angular.module('myApp', ['ui.layout']);
+</script>
+
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/angular-materialize.min.js"></script>
+  
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <!--<script src="bower_components/angular-ui-router/release/angular-ui-route.js"></script>-->
+
+
+  <script src="app.js"></script>
+  <script src="view1/view1.js"></script>
+  <script src="view2/view2.js"></script>
+  <script src="view3/view3.js"></script>
+  <script src="medcinsearch/medcinsearch.js"></script>
+  <script src="quippenote/quippenote.js"></script>
+  <script src="login/login.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+
+  <!--HMS Directive-->
+  <script src="directive/hms-auth.js"></script>
+  <script src="directive/hms-app-auth.js"></script>
+  <script src="directive/hms-patient-list.js"></script>
+  <script src="directive/hms-patient-allergy.js"></script>
+  <script src="directive/hms-patient-demographic.js"></script>
+  <script src="directive/hms-patient-vitalsigns.js"></script>
+  <script src="directive/hms-patient-labresult.js"></script>
+  <script src="directive/hms-patient-medication.js"></script>
+  <script src="directive/hms-practitioner-info.js"></script>
+  <script src="directive/hms-patient-dicom.js"></script>
+  <script src="directive/hms-logout.js"></script>
+  <!---->
+</body>
+</html>

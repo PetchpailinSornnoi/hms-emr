@@ -1,0 +1,27 @@
+<div class="row" ng-hide = "preload">
+	<div class="col s12 m4 l4">
+	</div>
+    <div class="col s12 m7 l7">
+		<div class="preloader-wrapper big active" style = "margin-top: 200px;">
+		    <div class="spinner-layer spinner-blue-only">
+		          <div class="circle-clipper left">
+		            <div class="circle"></div>
+		          </div><div class="gap-patch">
+		            <div class="circle"></div>
+		          </div><div class="circle-clipper right">
+		            <div class="circle"></div>
+		          </div>
+		    </div>
+		 </div>
+	</div>
+</div>
+ 
+
+
+ <hms-app-auth url = "172.18.62.213/hmsgw" username = "quippebnh" password="1qazxsw2" client-id="Bwwd0p3SOOhlfREFbznXu7as5N4AUF7yNVT5P0rG" client-secret="vPo36HwM68lzcyfsAt03NQQ9CBbzRoJZUWqspFdFOtAqsX0C3H99BlgfpSEfHh875FFYcXUwqHIIpl2yLHpd34eISYs1ZCrWJ7tYVv7ZfwR0MFTiNlvEqoeBaT9cxvRy">
+ </hms-app-auth>
+
+ <hms-auth url = "172.18.62.213/hmsgw" ng-if="tokenHasLoaded" access-token = token></hms-auth>
+
+
+ 
