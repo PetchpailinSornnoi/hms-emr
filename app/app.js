@@ -48,7 +48,7 @@ angular.module('myApp', [
     
     $rootScope.openNewPage = function(val){
       if(val ===  "old"){
-        $window.location='/';
+        $window.location='#!/patientlist';
       }
       else if(val === "new"){
         $window.location='ehr/#!/patientlist';
