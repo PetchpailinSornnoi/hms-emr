@@ -45,6 +45,7 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
         return $sce.trustAsResourceUrl(src);
     }
 
+    //$scope.quippeURL = {src:"http://172.18.62.227:9100/", title:"Quippe"};
     $scope.quippeURL = {src:"http://172.18.62.227:9100/GLSDefault.htm?patientId="+$routeParams.patientId+"&EpisodeNumber="+$routeParams.encounter+"&Username=009900203&templateId=shared:AAD1FB61DA6B4116B441BD14C6FAE232", title:"Quippe"};
 
     $http({
@@ -60,7 +61,7 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
         }, function myError(response) {
             $scope.error = response.statusText;
     }); 
+});
      
 
     
-});

@@ -85,7 +85,7 @@ angular.module('myApp', [
   $routeProvider
   
     .when('/patientlist', {
-          templateUrl: 'view1/view1.html',
+          templateUrl: 'ehr/view1/view1.html',
           controller: 'View1Ctrl'
     })
     // .when('/view1', {
@@ -93,15 +93,15 @@ angular.module('myApp', [
     //       controller: 'View1Ctrl'
     // })
     .when('/patient/:patientId/:encounter', {
-          templateUrl: 'view2/view2.html',
+          templateUrl: 'ehr/view2/view2.html',
           controller: 'View2Ctrl'
     })
     .when('/', {
-          templateUrl: 'login/login.html',
+          templateUrl: 'ehr/login/login.html',
           controller: 'LoginCtrl'
     })
     .when('/labresult/:patientId/:encounter/:file/', {
-          templateUrl: 'view3/view3.html',
+          templateUrl: 'ehr/view3/view3.html',
           controller: 'View3Ctrl'
     })
     // .when('/labresult/', {
@@ -109,14 +109,14 @@ angular.module('myApp', [
     //       controller: 'View3Ctrl'
     // })
     .when('/medcinsearch', {
-          templateUrl: 'medcinsearch/medcinsearch.html',
+          templateUrl: 'ehr/medcinsearch/medcinsearch.html',
           controller: 'medcinsearchCtrl'
     })
     .when('/quippenote/:patientId/:encounter/', {
-          templateUrl: 'quippenote/quippenote.html',
+          templateUrl: 'ehr/quippenote/quippenote.html',
           controller: 'quippenoteCtrl'
     })
 
 
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/'});
 }]);
