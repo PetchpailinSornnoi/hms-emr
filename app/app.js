@@ -45,7 +45,20 @@ angular.module('myApp', [
         $rootScope.isLogin = true;
         $window.location='#!/patientlist';
      }
-     
+    
+    $rootScope.openNewPage = function(val){
+      if(val ===  "old"){
+        $window.location='/';
+      }
+      else if(val === "new"){
+        $window.location='ehr/#!/patientlist';
+      }
+      else{
+        $window.location='/';
+      }
+
+    },
+
     $rootScope.logout = function(event){
       event.preventDefault();
       

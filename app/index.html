@@ -175,6 +175,10 @@ body {
       <div class="navbar-fixed" ng-show = isLogin>
           <nav class="cyan" id = "practitioner-nav">
               <div class="nav-wrapper">
+                  <ul class="left" style="margin-top: -14px;">
+                    <button type="button" ng-click = "openNewPage('old')"  class="btn btn-default grey">EMR</button>
+                    <button type="button" ng-click = "openNewPage('new')"  class="btn btn-default grey">EHR</button>
+                  </ul>
                   <ul class="right practitionerInfo">
                       <li> <span> {{practitionerInfo}} </span> </li>
                       <li>

@@ -2,7 +2,6 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-  'ui.materialize',
   'ngRoute',
   'ngCookies',
   'ui.layout',
@@ -47,6 +46,20 @@ angular.module('myApp', [
         $rootScope.isLogin = true;
         $window.location='#!/patientlist';
      }
+
+
+    $rootScope.openNewPage = function(val){
+      if(val ===  "old"){
+        $window.location='/';
+      }
+      else if(val === "new"){
+        $window.location='#!/patientlist';
+      }
+      else{
+        $window.location='/';
+      }
+
+    },
      
     $rootScope.logout = function(event){
       event.preventDefault();
@@ -61,6 +74,8 @@ angular.module('myApp', [
         $window.location='#!/';
 
     }
+
+
     
 })
 
