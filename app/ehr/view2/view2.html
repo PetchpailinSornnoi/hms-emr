@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div> -->
-     <!--    <div id="test5" class="col s12">
+<!--    <div id="test5" class="col s12">
             <div class="card">
                 <div class="card-content">
                 
@@ -70,8 +70,7 @@
         <div id="quippenote" class="col s12">
             <div class="card">
                 <div class="card-content"> -->
- 
-                    <!-- <iframe ng-src="{{trustSrc(quippeURL.src)}}"> 
+<!-- <iframe ng-src="{{trustSrc(quippeURL.src)}}"> 
                         <p>Your browser does not support iframes.</p>
                     </iframe> -->
 <!--                     <div class="row">
@@ -88,123 +87,624 @@
         </div>
     </div>
 </div> -->
-
 <div class="row">
-            <div class="col-md-9">
-
-              <!-- Demographics -->
-                <div class="well demographics" style="position: relative">
-                    <div class="row">
-                        <hms-patient-demographic url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} >                   
-                        </hms-patient-demographic> 
-
-                        <div class="col-md-3">
-                            <div class="ver-spacer left">
-                                <div class="mask"></div>
-                            </div>
-
-                        </div>
+    <div class="col-md-9">
+        <!-- Demographics -->
+        <div class="well demographics" style="position: relative">
+            <div class="row">
+                <hms-patient-demographic url="172.18.62.213/hmsgw" selected-patient={{patientId}} access-token={{token.access_token}}>
+                </hms-patient-demographic>
+                <!-- <div class="col-md-3">
+                    <div class="ver-spacer left">
+                        <div class="mask"></div>
                     </div>
-                </div>
-
-                <!--Vital Signs -->
-                <div class="patient-stats well" style="position: relative">
-                     <hms-patient-vitalsigns url = "172.18.62.213/hmsgw" encounter = {{encounter}} selected-patient = {{patientId}} access-token = {{token.access_token}}></hms-patient-vitalsigns>
-                     
-                    
-                </div>
-
-            
-
-            <div class = "patient-records">
-              <!-- Laboratory Results -->
-                <div class="panel panel-info" style="width: 97%;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Laboratory Results
-                            
-                        </h3>
-                    </div>
-                    <div class="panel-body" style="height: auto;">
-                         <hms-patient-labresult url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} encounter = {{encounter}} access-token = {{token.access_token}} set-code = {{setcode}}></hms-patient-labresult>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="last-measurement">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Medical Image -->
-                <div class="panel panel-warning" style="width: 97%;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Medical Image
-                            
-                        </h3>
-                    </div>
-                    <div class="panel-body" style="height: auto;">
-                        <hms-patient-dicom url = "172.18.62.213/hmsgw" access-token = {{token.access_token}} selected-patient = {{patientId}} encounter = {{encounter}}></hms-patient-dicom>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="last-measurement">
-                        </div>
-                    </div>
-                </div>
-          </div>
-
-
+                </div> -->
             </div>
-            <!-- col -->
-            <div class="col-md-3">
-               <!-- Allergy -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Allergies</h3>
-                    </div>
-                    <div class="panel-body">
-                        <hms-patient-allergy url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-allergy>
+        </div>
+        <!--Vital Signs -->
+        <div class="patient-stats well" style="position: relative">
+            <hms-patient-vitalsigns url="172.18.62.213/hmsgw" encounter={{encounter}} selected-patient={{patientId}} access-token={{token.access_token}}></hms-patient-vitalsigns>
+        </div>
+        <div class="patient-records">
+            <!-- Laboratory Results -->
+            <div class="panel panel-info" style="width: 97%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Laboratory Results
+                            
+                        </h3>
+                </div>
+                <div class="panel-body" style="height: auto;">
+                    <hms-patient-labresult url="172.18.62.213/hmsgw" selected-patient={{patientId}} encounter={{encounter}} access-token={{token.access_token}} set-code={{setcode}}></hms-patient-labresult>
+                </div>
+                <div class="panel-footer">
+                    <div class="last-measurement">
                     </div>
                 </div>
-
-                <!-- Medications -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Medications</h3>
-                    </div>
-                    <div class="panel-body" style="max-height: 160px; overflow-y: scroll;">
-                         <hms-patient-medication url = "172.18.62.213/hmsgw" encounter = {{encounter}} access-token = {{token.access_token}} ></hms-patient-medication>
-                    </div>
+            </div>
+            <!-- Timeline -->
+            <div class="panel panel-primary" style="width: 97%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Timeline</h3>
                 </div>
-
-                <!-- ​Problems -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Problems</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="problems">
-                            <li>Conductive hearing loss, bilateral</li>
-                            <li>Respiratory syncytial virus pneumonia</li>
-                            <li>Acute amoebic dysentery</li>
-                            <li>Superficial frostbite of neck</li>
+                <div class="panel-body" style="overflow: auto;">
+                    <div id="timeline-example">
+                        <ul class="timeline">
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-03-10T02:51:49.000+01:00">
+                                    <span>10-03-2014 08:51</span>
+                                    <span>10-Mar</span>
+                                </time>
+                                <div class="timeline-icon fa-stethoscope"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Medical Diagnosis | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Problem/Diagnosis</li>
+                                            <ul>
+                                                <li class="form-content"><span>Problem/Diagnosis: </span>Acute amoebic dysentery</li>
+                                                <li class="form-content"><span>Date of onset: </span>06-01-1999 16:03</li>
+                                                <li class="form-content"><span>Date of resolution/remission: </span>11-01-1999 03:23</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-03-04T00:46:02.000+01:00">
+                                    <span>04-03-2014 06:46</span>
+                                    <span>4-Mar</span>
+                                </time>
+                                <div class="timeline-icon fa-stethoscope"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Laboratory Report | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Laboratory test result</li>
+                                            <ul>
+                                                <li class="form-content"><span>Test result name: </span>S-Cholesterol</li>
+                                                <li class="form-content"><span>Overall test result status: </span>Final</li>
+                                                <li class="form-header opened"><i class="fa fa-angle-down"></i>Result group</li>
+                                                <ul>
+                                                    <li class="form-header opened"><i class="fa fa-angle-down"></i>S-Cholesterol</li>
+                                                    <ul>
+                                                        <li class="form-content"><span>Result value: </span>187.0 mg/dL</li>
+                                                        <li class="form-content"><span>Date Time result issued: </span>04-03-2014 06:46</li>
+                                                    </ul>
+                                                </ul>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-03-03T07:28:33.000+01:00">
+                                    <span>03-03-2014 13:28</span>
+                                    <span>3-Mar</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Vital Signs | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body temperature</li>
+                                            <ul>
+                                                <li class="form-content"><span>Temperature: </span>37.7 °C</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Blood Pressure</li>
+                                            <ul>
+                                                <li class="form-content"><span>Systolic: </span>88 mm[Hg]</li>
+                                                <li class="form-content"><span>Diastolic: </span>70 mm[Hg]</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Height/Length</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body Height/Length: </span>163.0 cm</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body weight</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body weight: </span>47.6 kg</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Pulse</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>88 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Respirations</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>17 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Indirect oximetry</li>
+                                            <ul>
+                                                <li class="form-content"><span>SpO2: </span>97.5 / 100.0</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-02-27T14:37:43.000+01:00">
+                                    <span>27-02-2014 20:37</span>
+                                    <span>27-Feb</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Vital Signs | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body temperature</li>
+                                            <ul>
+                                                <li class="form-content"><span>Temperature: </span>36.0 °C</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Blood Pressure</li>
+                                            <ul>
+                                                <li class="form-content"><span>Systolic: </span>122 mm[Hg]</li>
+                                                <li class="form-content"><span>Diastolic: </span>83 mm[Hg]</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Height/Length</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body Height/Length: </span>163.0 cm</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body weight</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body weight: </span>46.8 kg</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Pulse</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>157 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Respirations</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>18 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Indirect oximetry</li>
+                                            <ul>
+                                                <li class="form-content"><span>SpO2: </span>96.5 / 100.0</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-02-27T01:35:11.000+01:00">
+                                    <span>27-02-2014 07:35</span>
+                                    <span>27-Feb</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Vital Signs | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body temperature</li>
+                                            <ul>
+                                                <li class="form-content"><span>Temperature: </span>37.3 °C</li>
+                                                <li class="form-content"><span>Body exposure: </span>Reduced clothing/bedding</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Blood Pressure</li>
+                                            <ul>
+                                                <li class="form-content"><span>Systolic: </span>99 mm[Hg]</li>
+                                                <li class="form-content"><span>Diastolic: </span>70 mm[Hg]</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Height/Length</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body Height/Length: </span>162.0 cm</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body weight</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body weight: </span>49.8 kg</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Pulse</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>151 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Respirations</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>17 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Indirect oximetry</li>
+                                            <ul>
+                                                <li class="form-content"><span>SpO2: </span>99.9 / 100.0</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-02-25T21:17:11.000+01:00">
+                                    <span>26-02-2014 03:17</span>
+                                    <span>26-Feb</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Vital Signs | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body temperature</li>
+                                            <ul>
+                                                <li class="form-content"><span>Temperature: </span>36.2 °C</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Blood Pressure</li>
+                                            <ul>
+                                                <li class="form-content"><span>Systolic: </span>101 mm[Hg]</li>
+                                                <li class="form-content"><span>Diastolic: </span>62 mm[Hg]</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Height/Length</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body Height/Length: </span>162.0 cm</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body weight</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body weight: </span>48.1 kg</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Pulse</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>113 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Respirations</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>24 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Indirect oximetry</li>
+                                            <ul>
+                                                <li class="form-content"><span>SpO2: </span>97.3 / 100.0</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-02-19T08:30:29.000+01:00">
+                                    <span>19-02-2014 14:30</span>
+                                    <span>19-Feb</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Laboratory Report | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Laboratory test result</li>
+                                            <ul>
+                                                <li class="form-content"><span>Test result name: </span>S-HDL-Cholesterol</li>
+                                                <li class="form-content"><span>Overall test result status: </span>Final</li>
+                                                <li class="form-header opened"><i class="fa fa-angle-down"></i>Result group</li>
+                                                <ul>
+                                                    <li class="form-header opened"><i class="fa fa-angle-down"></i>S-HDL-Cholesterol</li>
+                                                    <ul>
+                                                        <li class="form-content"><span>Result value: </span>36.0 mg/dL</li>
+                                                        <li class="form-content"><span>Date Time result issued: </span>19-02-2014 14:30</li>
+                                                    </ul>
+                                                </ul>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-02-18T04:51:12.000+01:00">
+                                    <span>18-02-2014 10:51</span>
+                                    <span>18-Feb</span>
+                                </time>
+                                <div class="timeline-icon fa-stethoscope"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Medical Diagnosis | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Problem/Diagnosis</li>
+                                            <ul>
+                                                <li class="form-content"><span>Problem/Diagnosis: </span>Respiratory syncytial virus pneumonia</li>
+                                                <li class="form-content"><span>Date of onset: </span>03-03-2009 00:21</li>
+                                                <li class="form-content"><span>Date of resolution/remission: </span>18-04-2009 20:19</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-02-06T08:26:28.000+01:00">
+                                    <span>06-02-2014 14:26</span>
+                                    <span>6-Feb</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Vital Signs | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body temperature</li>
+                                            <ul>
+                                                <li class="form-content"><span>Temperature: </span>38.4 °C</li>
+                                                <li class="form-content"><span>Body exposure: </span>Naked</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Blood Pressure</li>
+                                            <ul>
+                                                <li class="form-content"><span>Systolic: </span>107 mm[Hg]</li>
+                                                <li class="form-content"><span>Diastolic: </span>58 mm[Hg]</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Height/Length</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body Height/Length: </span>163.0 cm</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body weight</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body weight: </span>49.0 kg</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Pulse</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>54 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Respirations</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>16 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Indirect oximetry</li>
+                                            <ul>
+                                                <li class="form-content"><span>SpO2: </span>98.5 / 100.0</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-02-03T05:31:06.000+01:00">
+                                    <span>03-02-2014 11:31</span>
+                                    <span>3-Feb</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Laboratory Report | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Laboratory test result</li>
+                                            <ul>
+                                                <li class="form-content"><span>Test result name: </span>S-CRP</li>
+                                                <li class="form-content"><span>Overall test result status: </span>Final</li>
+                                                <li class="form-header opened"><i class="fa fa-angle-down"></i>Result group</li>
+                                                <ul>
+                                                    <li class="form-header opened"><i class="fa fa-angle-down"></i>S-CRP</li>
+                                                    <ul>
+                                                        <li class="form-content"><span>Result value: </span>6.0 mg/L</li>
+                                                        <li class="form-content"><span>Date Time result issued: </span>03-02-2014 11:31</li>
+                                                    </ul>
+                                                </ul>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-01-22T17:30:10.000+01:00">
+                                    <span>22-01-2014 23:30</span>
+                                    <span>22-Jan</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Vital Signs | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body temperature</li>
+                                            <ul>
+                                                <li class="form-content"><span>Temperature: </span>36.7 °C</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Blood Pressure</li>
+                                            <ul>
+                                                <li class="form-content"><span>Systolic: </span>96 mm[Hg]</li>
+                                                <li class="form-content"><span>Diastolic: </span>59 mm[Hg]</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Height/Length</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body Height/Length: </span>164.0 cm</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Body weight</li>
+                                            <ul>
+                                                <li class="form-content"><span>Body weight: </span>46.1 kg</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Pulse</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>119 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Respirations</li>
+                                            <ul>
+                                                <li class="form-content"><span>Rate: </span>20 /min</li>
+                                            </ul>
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Indirect oximetry</li>
+                                            <ul>
+                                                <li class="form-content"><span>SpO2: </span>96.7 / 100.0</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-01-18T20:49:52.000+01:00">
+                                    <span>19-01-2014 02:49</span>
+                                    <span>19-Jan</span>
+                                </time>
+                                <div class="timeline-icon fa-plus-square"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Laboratory Report | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Laboratory test result</li>
+                                            <ul>
+                                                <li class="form-content"><span>Test result name: </span>S-CRP</li>
+                                                <li class="form-content"><span>Overall test result status: </span>Final</li>
+                                                <li class="form-header opened"><i class="fa fa-angle-down"></i>Result group</li>
+                                                <ul>
+                                                    <li class="form-header opened"><i class="fa fa-angle-down"></i>S-CRP</li>
+                                                    <ul>
+                                                        <li class="form-content"><span>Result value: </span>12.0 mg/L</li>
+                                                        <li class="form-content"><span>Date Time result issued: </span>19-01-2014 02:49</li>
+                                                    </ul>
+                                                </ul>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-01-14T19:31:57.000+01:00">
+                                    <span>15-01-2014 01:31</span>
+                                    <span>15-Jan</span>
+                                </time>
+                                <div class="timeline-icon fa-stethoscope"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Medical Diagnosis | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Problem/Diagnosis</li>
+                                            <ul>
+                                                <li class="form-content"><span>Problem/Diagnosis: </span>Superficial frostbite of neck</li>
+                                                <li class="form-content"><span>Date of onset: </span>05-12-1983 11:04</li>
+                                                <li class="form-content"><span>Date of resolution/remission: </span>10-12-1983 11:04</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-01-05T18:28:56.000+01:00">
+                                    <span>06-01-2014 00:28</span>
+                                    <span>6-Jan</span>
+                                </time>
+                                <div class="timeline-icon fa-medkit"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Medications | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Medication instruction</li>
+                                            <ul>
+                                                <li class="form-header opened"><i class="fa fa-angle-down"></i>Order</li>
+                                                <ul>
+                                                    <li class="form-content"><span>Medicine: </span>Fortecortin (deksametazon) 2 mg tbl</li>
+                                                    <li class="form-header opened"><i class="fa fa-angle-down"></i>Dose</li>
+                                                    <ul>
+                                                        <li class="form-content"><span>Quantity: </span>6.0 mg</li>
+                                                    </ul>
+                                                    <li class="form-header opened"><i class="fa fa-angle-down"></i>Medication timing</li>
+                                                    <ul>
+                                                        <li class="form-content"><span>Start date: </span>06-01-2014 00:28</li>
+                                                        <li class="form-content"><span>Stop date: </span>13-01-2014 00:28</li>
+                                                    </ul>
+                                                </ul>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <time class="timeline-date" datetime="2014-01-03T22:50:19.000+01:00">
+                                    <span>04-01-2014 04:50</span>
+                                    <span>4-Jan</span>
+                                </time>
+                                <div class="timeline-icon fa-stethoscope"></div>
+                                <div class="timeline-label">
+                                    <div class="timeline-title collapsed">
+                                        <h3>Medical Diagnosis | ehrscape</h3>
+                                    </div>
+                                    <div class="timeline-content" style="display: none;">
+                                        <ul class="form-element">
+                                            <li class="form-header opened"><i class="fa fa-angle-down"></i>Problem/Diagnosis</li>
+                                            <ul>
+                                                <li class="form-content"><span>Problem/Diagnosis: </span>Conductive hearing loss, bilateral</li>
+                                                <li class="form-content"><span>Date of onset: </span>04-03-2009 09:57</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>
-
-                <!-- Quippe Note -->
-                <a href="#!/quippenote/{{patientId}}/{{encounter}}"><div class="well">Quippe Note</div></a>
-
-                <!-- Medcin Intelligence -->
-                <a href="#!/medcinsearch"><div class="well">Medcin Intelligence</div></a>
-
+                <div class="panel-footer">
+                    <div class="last-measurement">
+                    </div>
+                </div>
             </div>
-            <!-- col -->
+            <!-- Medical Image -->
+            <div class="panel panel-warning" style="width: 97%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Medical Image
+                            
+                        </h3>
+                </div>
+                <div class="panel-body" style="height: auto;">
+                    <hms-patient-dicom url="172.18.62.213/hmsgw" access-token={{token.access_token}} selected-patient={{patientId}} encounter={{encounter}}></hms-patient-dicom>
+                </div>
+                <div class="panel-footer">
+                    <div class="last-measurement">
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- row -->
-
-
-
-
-
-
-
-
-
+    </div>
+    <!-- col -->
+    <div class="col-md-3">
+        <!-- Allergy -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Allergies</h3>
+            </div>
+            <div class="panel-body">
+                <hms-patient-allergy url="172.18.62.213/hmsgw" selected-patient={{patientId}} access-token={{token.access_token}}></hms-patient-allergy>
+            </div>
+        </div>
+        <!-- Medications -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Medications</h3>
+            </div>
+            <div class="panel-body" style="max-height: 160px; overflow-y: scroll;">
+                <hms-patient-medication url="172.18.62.213/hmsgw" encounter={{encounter}} access-token={{token.access_token}}></hms-patient-medication>
+            </div>
+        </div>
+        <!-- ​Problems -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Problems</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="problems">
+                    <li>Conductive hearing loss, bilateral</li>
+                    <li>Respiratory syncytial virus pneumonia</li>
+                    <li>Acute amoebic dysentery</li>
+                    <li>Superficial frostbite of neck</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Quippe Note -->
+        <a href="#!/quippenote/{{patientId}}/{{encounter}}">
+            <div class="well">Quippe Note</div>
+        </a>
+        <!-- Medcin Intelligence -->
+        <a href="#!/medcinsearch">
+            <div class="well">Medcin Intelligence</div>
+        </a>
+    </div>
+    <!-- col -->
+</div>
+<!-- row -->

@@ -5,6 +5,7 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
 .controller('View2Ctrl', function($scope,$routeParams,$cookies,$window,$rootScope, $sce,$http) {
     $scope.patientId = $routeParams.patientId;
     $scope.encounter = $routeParams.encounter;
+
     $scope.setcode = "N620";
 
     $scope.dicomURL = "DWV-Dicom/dwv/viewers/static/index.html";

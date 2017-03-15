@@ -1,15 +1,33 @@
-<div class="valign-wrapper" style = "padding-top: 10%;">
+<!-- <div class="valign-wrapper" style = "padding-top: 10%;">
       <div class="row">
         <div class="col s12 m10">
           <div class="card">
             <div class="card-content">
               <p class = "black-text">Please Sign in</p>
               </br> 
-                  <input placeholder="Username" value = "009900203" type="text" required="">
+                  <input placeholder="Username" value = "009900203" type="text" required=""> <br>
                   <input placeholder="Password" value = "6ZoYxCjLONXyYIU2eJIuAw==" type="password" required="">
                   <a class="waves-effect waves-light btn cyan" ng-click = "login()">Log in</a>
             </div>
           </div>
         </div>
     </div>
+</div> -->
+
+<div class="row">
+        <div class="col-md-offset-5 col-md-3">
+            <div class="form-login">
+            <h4>Please Sign in</h4>
+            <input placeholder="Username" class="form-control input-sm" value = "009900203" type="text" required="">
+            </br>
+            <input placeholder="Password" class="form-control input-sm" value = "6ZoYxCjLONXyYIU2eJIuAw==" type="password" required="">
+            </br>
+            <div class="wrapper">
+            <span class="group-btn">     
+                <a href="#" class="btn btn-primary btn-md" ng-click = "login()">Log in<i class="fa fa-sign-in"></i></a>
+            </span>
+            </div>
+            </div>
+        
+        </div>
 </div>
