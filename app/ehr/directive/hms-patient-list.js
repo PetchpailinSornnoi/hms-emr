@@ -3,7 +3,7 @@
         return {
             restrict: 'E',
             replace: 'true',
-            templateUrl: 'ehr/template/hms-patient-list.html',
+            templateUrl: 'template/hms-patient-list.html',
             scope: {
                 url: "@",
                 practitionerId: "@",
