@@ -118,5 +118,5 @@ angular.module('myApp', [
     })
 
 
-  $routeProvider.otherwise({redirectTo: '/'});
+  $routeProvider.otherwise({redirectTo: '/patientlist'});
 }]);

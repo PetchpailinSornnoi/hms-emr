@@ -3,7 +3,7 @@ angular.module('hmsPatientAllergy', ["ngCookies"])
         return {
             restrict: 'E',
             replace: 'true',
-            templateUrl: 'ehr/template/hms-patient-allergy.html',
+            templateUrl: 'template/hms-patient-allergy.html',
             scope: {
                 url: "@",
                 selectedPatient: "@",

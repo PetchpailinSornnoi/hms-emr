@@ -3,7 +3,7 @@ angular.module('hmsPatientDicom', ["ngCookies"])
         return {
             restrict: 'E',
             replace: 'true',
-            templateUrl: 'ehr/template/hms-patient-dicom.html',
+            templateUrl: 'template/hms-patient-dicom.html',
             scope: {
                 url: "@",
                 accessToken: "@",

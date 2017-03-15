@@ -3,7 +3,7 @@ angular.module('hmsPatientLabresult', ["ngCookies"])
         return {
             restrict: 'E',
             replace: 'true',
-            templateUrl: 'ehr/template/hms-patient-labresult.html',
+            templateUrl: 'template/hms-patient-labresult.html',
             scope: {
                 selectedPatient: "@",
                 accessToken: "@",
