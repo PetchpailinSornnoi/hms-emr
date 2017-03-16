@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Intelligence Prompt</title>
+
+      <style>
+          body{
+            background-color: white;
+          }
+          .image-fade {
+            opacity: 1;
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: .5s ease;
+            backface-visibility: hidden;
+          }
+          .fade-in {
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            top: -30%;
+            left: 10%;
+          }
+          #trash {
+            position: absolute;
+            top: 280px;
+            right: 10%;
+            width: 150px;
+          }
+          #trash.over .image-fade {
+            opacity: 0.3;
+          }
+          #trash.over .fade-in {
+            opacity: 1;
+          }
+          .tag {
+            display: inline-block;
+            border-radius: 25px;
+            padding: 7px;
+            margin: 2px;
+          }
+          .tag.type1 { background: #ffd54f; }
+          .tag.type2 { background: #f48fb1; }
+          .tag.type3 { background: #64b5f6; }
+          .tag.type5 { background: #bdbdbd; }
+          .tag.type6 { background: #ef5350; }
+          .tag.type7 { background: #9ccc65; }
+
+          .header {
+            font-size: 3em;
+            text-align: center;
+          }
+          .dropbox {
+            display: inline-block;
+            position: relative;
+            border: 1px solid black;
+            width: 50%;
+            height: 300px;
+            margin-left: 25%;
+          }
+          .title {
+            font-size: 2em;
+            margin-top: 1%;
+            margin-bottom: 1%;
+            margin-left: 10%;
+          }
+          #searchArea {
+            border: 1px solid black;
+            width: 80%;
+            height: auto;
+            margin-left: 10%;
+            margin-top: 0;
+          }
+          #searchBox {
+            border: none;
+            width: auto;
+            font-size: 1.2em;
+            padding: 0;
+            margin: 0;
+            height: 28px;
+            padding-left: 2px;
+          }
+          #searchBox:focus {
+              outline: none;
+          }
+          #searchList {
+            list-style-type: none;
+            margin: 0;
+            margin-left: 10%;
+            padding: 0;
+            width: 80%;
+            font-size: 1.2em;
+          }
+          #searchList li:hover, #searchList li:nth-child(even):hover {
+            background-color: #64ffda;
+          }
+          #searchList li:nth-child(even) {
+            background-color: #f2f2f2;
+          }
+          #selectedArea {
+              height: auto;
+          }
+          #termtype {
+            margin-left: 10%;
+            margin-bottom: 1%;
+            font-size: 1em;
+            width: 10%;
+          }
+      </style>
+
+    </head>
+    <body>
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+      <h1 class="header">Intelligence Prompt</h1>
+      
+      <div class="dropbox" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+      <div id="trash" ondrop="deleteChild(event)" ondragover="dragOver(event)">
+          <div style="position: relative;">
+            <img src="./img/trash.png" alt="trash" class="image-fade" />
+            <p class="fade-in">Drop here to delete.</p>
+          </div>
+      </div>
+
+      <p class="title">States:</p>
+
+      <select id="termtype" onchange="changeType()">
+        <option value="1">Symptom</option>
+        <option value="2">Physical</option>
+        <option value="3">Test</option>
+        <option value="5">History</option>
+        <option value="6">Disease</option>
+        <option value="7">Therapy</option>
+      </select>
+      <input type="checkbox" id="intelligenceCheckBox" value="false" />Intelligent Search
+
+      <div id="searchArea" onclick="focusInput()">
+          <span id="selectedArea"></span>
+          <input type="text" id="searchBox" value=""/>
+      </div>
+      <div><ul id="searchList"></ul></div>
+
+      <script>
+        var selectedList = [];
+        var intelligentData = [];
+        var loadData = false;
+        var childenElements = [];
+
+        $(document).ready(function(){
+            $("#searchBox").keyup(function(){
+                var textInput = $("#searchBox").val();
+                var typeValue = $("#termtype").val();
+
+                if($("#intelligenceCheckBox").val() == 'true'){
+                    intelligentSearch(textInput, typeValue);
+                }
+                else {
+                    search(textInput, typeValue);
+                }
+            });
+
+            $("#intelligenceCheckBox").on('change', function() {
+                if ($(this).is(':checked')) {
+                    $(this).attr('value', 'true');
+                    intelligentSearch($("#searchBox").val(), $("#termtype").val());
+                } else {
+                    $(this).attr('value', 'false');
+                }
+            });
+        });
+
+        function search(textInput,typeValue){
+            $.ajax({
+                url: "http://172.18.62.213/quippe/ws.aspx/Medcin/Search?Query="+ textInput +"&CodeFilter=0&GroupBy=0&TermType="+ typeValue +"&DataFormat=2&Culture=en-US",
+                type: 'GET',
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    res = JSON.parse(res);
+                    $ul_list = $('#searchList');
+                    $ul_list.empty();
+                    $.each(res.termList, function(index, value){
+                        $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + $("#termtype").val() + ")\">" + value.text + "</li>");
+                    })
+                }
+            });
+        }
+
+        function intelligentSearch(textInput,typeValue){
+            if(selectedList.length == 0)
+                return;
+
+            if(!loadData){
+                var request_body =  "<Patient><Encounters><Encounter><Records>";
+                for(var i = 0; i < selectedList.length ; ++i)
+                    request_body += '<Record MedcinId="'+selectedList[i].id+'"/>'
+                request_body += '</Records></Encounter></Encounters></Patient>';
+        
+                var formdat = new FormData();
+                formdat.append("chart", request_body);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "http://172.18.62.213/quippe/ws.aspx/Medcin/IntelligentPrompt?ListSize=1&GroupBy=0&TermType="+typeValue+"&DataFormat=2&Culture=en-US",
+                    "method": "POST",
+                    "headers": {
+                        "cache-control": "no-cache",
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "mimeType": "multipart/form-data",
+                    "data": formdat
+                }
+            
+                $.ajax(settings).done(function (response) {
+                    intelligentData = JSON.parse(response).termList.term;
+                    loadData = true;
+                    printIntelligentData(textInput, typeValue);
+                });
+            }
+            else{
+                printIntelligentData(textInput, typeValue);
+            }
+        }
+
+        function printIntelligentData(textInput, typeValue){
+            $ul_list = $('#searchList');
+            $ul_list.empty();
+
+            if(textInput != ''){
+                $.each(intelligentData, function(index, value){
+                    if(value.text.toLowerCase().match(textInput.toLowerCase())){
+                        $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
+                    }
+                })
+            }
+            else{
+                $.each(intelligentData, function(index, value){
+                    $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
+                })
+            }
+        }
+    
+        function selectItem(medcinId, selectedText, typeValue) {
+            for(var i = 0; i < selectedList.length; ++i){
+                if(selectedList[i].id == medcinId) {
+                    $('#searchList').empty();
+                    $('#searchBox').val('')
+                    changeType();
+                    return;
+                }
+            }
+            selectedList.push({id: medcinId, type: typeValue, text: selectedText });
+            $selectedArea = $('#selectedArea');
+            $selectedArea.append("<span class='tag type"+ typeValue +"' id='"+ medcinId +"' draggable='true' ondragstart='drag(event)'>" + selectedText + "</span>");
+            
+            $('#searchList').empty();
+            $('#searchBox').val('');
+            loadData = false;
+            changeType();
+        }
+
+        function changeType(){
+            if($("#intelligenceCheckBox").val() == 'true'){
+                loadData = false;
+                intelligentSearch($('#searchBox').val(), $('#termtype').val());
+            }
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            event.target.appendChild(document.getElementById(data));
+        }
+
+        function DFS(parent){
+            if(parent.childElementCount == 0){
+                childenElements.push(parent);
+            }
+            else{
+                var childrenlist = parent.children;
+                for(var i=0; i<childrenlist.length; i++)
+                    DFS(childrenlist[i]);
+                childenElements.push(parent);
+            }
+            
+        }
+
+        function deleteChild(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            var element = document.getElementById(data);
+            
+            DFS(element);
+            for(var i = 0; i < selectedList.length ; ++i){
+                for(var j = 0; j < childenElements.length; ++j){
+                    if(i >= selectedList.length) break;
+                    if(selectedList[i].id == parseInt(childenElements[j].id)){
+                        selectedList.splice(i,1);
+                        j = 0;
+                    }
+                }
+            }
+            childenElements.splice(0,childenElements.length);
+            element.parentNode.removeChild(element);
+            loadData = false;
+        }
+
+        var cols = document.querySelectorAll('#trash');
+            [].forEach.call(cols, function(col) {
+            col.addEventListener('dragenter', handleDragEnter, false);
+            col.addEventListener('dragleave', handleDragLeave, false);
+            col.addEventListener('drop', handleDragEnd, false);
+        });
+
+        function handleDragEnter(event) {
+            this.classList.add('over');
+        }
+
+        function handleDragLeave(event) {
+            this.classList.remove('over');
+        }
+
+        function handleDragEnd(event) {
+            this.classList.remove('over');
+        }
+
+        function focusInput() {
+            $('#searchBox').focus();
+        }
+      </script>
+    </body>
+  </html>

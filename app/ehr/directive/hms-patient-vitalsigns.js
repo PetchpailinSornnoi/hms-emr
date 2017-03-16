@@ -62,10 +62,10 @@ angular.module('hmsPatientVitalsigns', ["ngCookies"])
                     },
                     $scope._getImageurl = function(gender){
                       if(gender === 'F'){
-                          return "img/body-blank-female.png";
+                          return "https://www.ehrscape.com/demo/img/body-blank-female.png";
                       }
                       else if(gender === 'M'){
-                          return "img/body-blank-male.png";
+                          return "https://www.ehrscape.com/demo/img/body-blank-male.png";
                       }
                       else{
                           return "";

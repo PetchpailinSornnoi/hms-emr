@@ -12,27 +12,27 @@ angular.module('myApp.medcinsearch', ['ngRoute','ngCookies'])
 .controller('medcinsearchCtrl', function($scope,$routeParams,$cookies,$window,$rootScope,$http) {
 
    
-	var practitioner = $cookies.getObject('practitioner').practitioner;
+	// var practitioner = $cookies.getObject('practitioner').practitioner;
 
-    $rootScope.hnHasLoaded = false;
+ //    $rootScope.hnHasLoaded = false;
 
-	$rootScope.practitionerInfo = practitioner.name[0].given_name+" "+practitioner.name[0].family_name+"("+practitioner.qualification+") ,"+practitioner.specialty_desc;
+	// $rootScope.practitionerInfo = practitioner.name[0].given_name+" "+practitioner.name[0].family_name+"("+practitioner.qualification+") ,"+practitioner.specialty_desc;
 
-     if(practitioner === undefined || practitioner === null){
-        $rootScope.isLogin = false;
-     }
-     else{
-        $rootScope.isLogin = true;
-     }
+ //     if(practitioner === undefined || practitioner === null){
+ //        $rootScope.isLogin = false;
+ //     }
+ //     else{
+ //        $rootScope.isLogin = true;
+ //     }
 
-     if($cookies.getObject('selectedpatient') === undefined){
-        $rootScope.isSelectedHn = false;
-     }
-     else{
-        $rootScope.isSelectedHn = true;
-        $rootScope.patientId = $cookies.getObject('selectedpatient').patientId;
-        $rootScope.encounter = $cookies.getObject('selectedpatient').encounter;
-     }
+ //     if($cookies.getObject('selectedpatient') === undefined){
+ //        $rootScope.isSelectedHn = false;
+ //     }
+ //     else{
+ //        $rootScope.isSelectedHn = true;
+ //        $rootScope.patientId = $cookies.getObject('selectedpatient').patientId;
+ //        $rootScope.encounter = $cookies.getObject('selectedpatient').encounter;
+ //     }
 
     
     // $scope.searchMedcin = function(){
