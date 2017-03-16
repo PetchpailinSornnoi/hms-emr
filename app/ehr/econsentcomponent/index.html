@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>E-Consent</title>
+        <style>
+            body{
+                background-color: white;
+            }
+            .header {
+                font-size: 3em;
+                text-align: center;
+            }
+            .container {
+                width: 70%;
+                margin-left: 15%;
+            }
+            .sign-box {
+                width: 400px;
+                height: auto;
+                margin: auto;
+            }
+            .sign-box p {
+                font-size: 1.5em;
+                text-align: center;
+                margin: 0;
+            }
+            .wrapper {
+                position: relative;
+                width: 400px;
+                height: 200px;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                border: 1px solid black;
+            }
+            .signature-pad {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 400px;
+                height: 200px;
+            }
+        </style>
+    </head>
+    <body onselectstart="return false">
+        <p class="header">Consent Form</p>
+        <div class="container">
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet, an movet timeam pri, an nec veri noluisse mandamus, sea id ceteros noluisse. Et etiam oblique mea. Altera putant ne sit, ne nibh doming audire qui, nominavi moderatius eum ne. No blandit albucius conceptam pro, feugait salutandi sea at.
+            </p>
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vel eius altera recusabo cu, vix ex veri moderatius scripserit. Cum rebum habemus posidonium ad. Ut pro doming prompta. Vis no assum exerci concludaturque, cibo clita alterum an ius. Eu movet detraxit mei, ne mei minim feugiat. Id quo inani nobis inermis. Vim in malis propriae similique, cu usu latine urbanitas.
+            </p>
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sumo facer scribentur mel in, summo discere duo ei. Per at elitr aeterno, ne vel diceret ornatus. Oporteat efficiendi cotidieque usu eu. Novum ceteros sea ex.
+            </p>
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ei nonumes appetere honestatis pro, est in purto voluptatum. Eu eos nonumy insolens explicari. Omnes dolore mea an, eos ei impedit luptatum partiendo. Atqui ullum epicurei cu eum, nam ex prima eleifend, pro an tritani voluptatum. His at amet erant laudem. Ei quo congue vocibus, ad qui nonumy blandit.
+            </p>
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timeam adversarium ea eum, at pro esse audire. Te vidit accusata repudiandae est, bonorum veritus id has. Senserit aliquando reformidans ex sed, has esse deterruisset an. Definiebas necessitatibus pro et. Quas falli eu quo, nam dicat sadipscing suscipiantur ea, sed elit commodo id. Ut nec affert tritani pertinacia, vix ea lorem assueverit definitionem.
+            </p>
+            <br />
+            <input type="checkbox" id="accept" value="false" />I agree to software and services agreement.
+
+            <div class="sign-box">
+                <p>Sign here</p>
+                <div class="wrapper">
+                    <canvas id="signature-pad" class="signature-pad" width="400" height="200"></canvas>
+                </div>
+                <button id="clear" onclick="clearSignBox()">Clear</button>
+            </div>
+
+            <button id="submit" onclick="sentData()" disabled>Submit</button>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="./js/signature_pad.min.js"></script>
+
+        <script>
+            var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                penColor: 'rgb(0, 0, 0)'
+            });
+
+            function clearSignBox() {console.log("a");
+                signaturePad.clear();
+            }
+
+            function sentData() {
+                var data = signaturePad.toDataURL('image/png');
+                window.open(data)
+            }
+
+            $(document).ready(function(){
+                $("#accept").on('change', function() {
+                    if ($(this).is(':checked')) {
+                        $(this).attr('value', 'true');
+                        $("#submit").attr('disabled', false);
+                    } else {
+                        $(this).attr('value', 'false');
+                        $("#submit").attr('disabled', true);
+                    }
+                });
+            });
+         </script>
+    </body>
+</html>

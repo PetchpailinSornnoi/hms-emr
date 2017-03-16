@@ -22,6 +22,7 @@ angular.module('myApp', [
   'myApp.medcinsearch',
   'myApp.quippenote',
   'myApp.login',
+  'myApp.econsent',
   'myApp.version'
 ])
 // .run(function($rootScope, $templateCache) {
@@ -111,6 +112,10 @@ angular.module('myApp', [
     .when('/medcinsearch', {
           templateUrl: 'medcinsearch/medcinsearch.html',
           controller: 'medcinsearchCtrl'
+    })
+    .when('/econsent', {
+          templateUrl: 'econsent/econsent.html',
+          controller: 'econsentCtrl'
     })
     .when('/quippenote/:patientId/:encounter/', {
           templateUrl: 'quippenote/quippenote.html',
