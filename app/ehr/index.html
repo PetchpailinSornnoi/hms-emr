@@ -164,6 +164,24 @@ function nav(){
        document.getElementById("main").style.marginLeft = "250px";
    }
 }
+
+$(document).ready(function() {
+    $(document).on("click",".timeline > li .timeline-label .timeline-title",function() {
+          var el = $(this);
+          var state = el.attr('class');
+          var content = el.siblings('.timeline-content');
+
+          if(state === "timeline-title collapsed"){
+             el.addClass('expanded');
+             el.siblings('.timeline-content').css("display","block");
+          }
+          else{
+             el.removeClass("expanded");
+             el.siblings('.timeline-content').css("display","none");
+          }
+    });
+
+});
 // function openNav() {
 //     // open = false;
 //     //console.log(document.getElementById("mySidenav").style.width);
