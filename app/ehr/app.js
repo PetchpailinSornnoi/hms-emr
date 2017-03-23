@@ -113,7 +113,7 @@ angular.module('myApp', [
           templateUrl: 'medcinsearch/medcinsearch.html',
           controller: 'medcinsearchCtrl'
     })
-    .when('/econsent', {
+    .when('/econsent/:patientId/', {
           templateUrl: 'econsent/econsent.html',
           controller: 'econsentCtrl'
     })

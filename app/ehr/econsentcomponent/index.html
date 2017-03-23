@@ -85,14 +85,30 @@
                 backgroundColor: 'rgba(255, 255, 255, 0)',
                 penColor: 'rgb(0, 0, 0)'
             });
+            var hn = '';
 
-            function clearSignBox() {console.log("a");
+            function clearSignBox() {
                 signaturePad.clear();
             }
 
             function sentData() {
-                var data = signaturePad.toDataURL('image/png');
-                window.open(data)
+                var data = { hn: hn , signature: signaturePad.toDataURL('image/png').slice(22) };
+                $.post( "http://172.18.62.213/hmsgw/Econsent/" , data)
+                .done(function( res ) {
+                   alert(res.success);
+                })
+            }
+
+            function getParamValue(paramName)
+            {
+                var url = window.location.search.substring(1); //get rid of "?" in querystring
+                var qArray = url.split('&'); //get key-value pairs
+                for (var i = 0; i < qArray.length; i++) 
+                {
+                    var pArr = qArray[i].split('='); //split key and value
+                    if (pArr[0] == paramName) 
+                        return pArr[1]; //return value
+                }
             }
 
             $(document).ready(function(){
@@ -105,6 +121,8 @@
                         $("#submit").attr('disabled', true);
                     }
                 });
+
+                hn = getParamValue('hn');
             });
          </script>
     </body>

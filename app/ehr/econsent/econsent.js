@@ -10,6 +10,7 @@ angular.module('myApp.econsent', ['ngRoute','ngCookies'])
 // }])
 
 .controller('econsentCtrl', function($scope,$routeParams,$cookies,$window,$rootScope,$http) {
-
+    $scope.patientId = $routeParams.patientId;
+    $scope.url = "econsentcomponent/index.html?hn="+$scope.patientId;
     
 });
