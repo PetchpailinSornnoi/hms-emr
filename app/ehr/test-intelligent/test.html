@@ -3,7 +3,7 @@
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title>Intelligence Prompt</title>
+      <title>Intelligent Prompt</title>
 
       <style>
           body{
@@ -15,10 +15,12 @@
             width: 100%;
             height: auto;
             transition: .5s ease;
+            -webkit-transition: .5s ease;
             backface-visibility: hidden;
           }
           .fade-in {
             transition: .5s ease;
+            -webkit-transition: .5s ease;
             opacity: 0;
             position: absolute;
             top: -30%;
@@ -34,6 +36,10 @@
             opacity: 0.3;
           }
           #trash.over .fade-in {
+            opacity: 1;
+          }
+          #trash:hover #clearBtn {
+            visibility: visible;
             opacity: 1;
           }
           .tag {
@@ -59,7 +65,9 @@
             border: 1px solid black;
             width: 50%;
             height: 300px;
-            margin-left: 25%;
+            margin-left: 3%;
+            transition: .3s linear;
+            -webkit-transition: .3s linear;
           }
           .title {
             font-size: 2em;
@@ -109,19 +117,72 @@
             font-size: 1em;
             width: 10%;
           }
+          #shortcut {
+            float: left;
+            width: 20%;
+            height: 300px;
+            margin-left: 2%;
+            overflow: scroll;
+            border: 1px solid black;
+            padding: 7px;
+          }
+          .quickslot {
+            width: 100%;
+            height: auto;
+          }
+          .slotTitle {
+            padding: 0;
+            margin: 0;
+            font-size: 1.5em;
+            text-shadow: 2px 2px 5px #9e9e9e;
+            padding-bottom: 5px;
+          }
+          .slotTitle.shadow1 { text-shadow: 2px 2px 5px #ffd54f }
+          .slotTitle.shadow2 { text-shadow: 2px 2px 5px #f48fb1 }
+          .slotTitle.shadow3 { text-shadow: 2px 2px 5px #64b5f6 }
+          .slotTitle.shadow5 { text-shadow: 2px 2px 5px #bdbdbd }
+          .slotTitle.shadow6 { text-shadow: 2px 2px 5px #ef5350 }
+          .slotTitle.shadow7 { text-shadow: 2px 2px 5px #9ccc65 }
+          #clearBtn {
+            position: absolute;
+            top: 45%;
+            left: 32%;
+            padding: 7px;
+            font-size: 1em;
+            border: none;
+            border-radius: 25px;
+            background-color: #ffff8d;
+            outline: none;
+            visibility: hidden;
+            opacity: 0;
+            transition: .5s ease;
+            -webkit-transition: .5s ease;
+          }
+          #clearBtn:hover {
+            box-shadow: 0 0px 16px 0 rgba(0,0,0,0.24),0 6px 20px 0 rgba(0,0,0,0.19);
+          }
       </style>
 
     </head>
     <body>
       <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-      <h1 class="header">Intelligence Prompt</h1>
-      
-      <div class="dropbox" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+      <h1 class="header">Intelligent Prompt</h1>
+
+      <div id="shortcut">
+          <div class="quickslot"><p class="slotTitle shadow1"><b>Symptom</b></p><span id="slot1"></span></div><hr>
+          <div class="quickslot"><p class="slotTitle shadow2"><b>Physical</b></p><span id="slot2"></span></div><hr>
+          <div class="quickslot"><p class="slotTitle shadow3"><b>Test</b></p><span id="slot3"></span></div><hr>
+          <div class="quickslot"><p class="slotTitle shadow5"><b>History</b></p><span id="slot5"></span></div><hr>
+          <div class="quickslot"><p class="slotTitle shadow6"><b>Disease</b></p><span id="slot6"></span></div><hr>
+          <div class="quickslot"><p class="slotTitle shadow7"><b>Therapy</b></p><span id="slot7"></span></div>
+      </div>
+      <div id="dropArea" class="dropbox" ondrop="drop(event)" ondragover="dragOver(event)"></div>
       <div id="trash" ondrop="deleteChild(event)" ondragover="dragOver(event)">
           <div style="position: relative;">
             <img src="./img/trash.png" alt="trash" class="image-fade" />
             <p class="fade-in">Drop here to delete.</p>
+            <button id="clearBtn" onclick="clearAllTags()">Clear</button>
           </div>
       </div>
 
@@ -148,6 +209,9 @@
         var intelligentData = [];
         var loadData = false;
         var childenElements = [];
+        var dragFromShortcut = false;
+        var isDrag = false;
+        var isOverClearBtn = false;
 
         $(document).ready(function(){
             $("#searchBox").keyup(function(){
@@ -172,6 +236,9 @@
                     $ul_list.empty();
                 }
             });
+
+            $("#shortcut").hide();
+            hideShortcut();
         });
 
         function search(textInput,typeValue){
@@ -192,35 +259,42 @@
             });
         }
 
+        function intelligentRequestData(typeValue ,callback) {
+            var request_body =  "<Patient><Encounters><Encounter><Records>";
+            for(var i = 0; i < selectedList.length ; ++i)
+                request_body += '<Record MedcinId="'+selectedList[i].id+'"/>'
+            request_body += '</Records></Encounter></Encounters></Patient>';
+    
+            var formdat = new FormData();
+            formdat.append("chart", request_body);
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://172.18.62.213/quippe/ws.aspx/Medcin/IntelligentPrompt?ListSize=1&GroupBy=0&TermType="+typeValue+"&DataFormat=2&Culture=en-US",
+                "method": "POST",
+                "headers": {
+                    "cache-control": "no-cache",
+                },
+                "processData": false,
+                "contentType": false,
+                "mimeType": "multipart/form-data",
+                "data": formdat
+            }
+        
+            $.ajax(settings).done(function (response) {
+                var data = JSON.parse(response).termList.term;
+                callback(typeValue, data);
+            });
+        }
+
         function intelligentSearch(textInput,typeValue){
             if(selectedList.length == 0)
                 return;
 
             if(!loadData){
-                var request_body =  "<Patient><Encounters><Encounter><Records>";
-                for(var i = 0; i < selectedList.length ; ++i)
-                    request_body += '<Record MedcinId="'+selectedList[i].id+'"/>'
-                request_body += '</Records></Encounter></Encounters></Patient>';
-        
-                var formdat = new FormData();
-                formdat.append("chart", request_body);
-
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": "http://172.18.62.213/quippe/ws.aspx/Medcin/IntelligentPrompt?ListSize=1&GroupBy=0&TermType="+typeValue+"&DataFormat=2&Culture=en-US",
-                    "method": "POST",
-                    "headers": {
-                        "cache-control": "no-cache",
-                    },
-                    "processData": false,
-                    "contentType": false,
-                    "mimeType": "multipart/form-data",
-                    "data": formdat
-                }
-            
-                $.ajax(settings).done(function (response) {
-                    intelligentData = JSON.parse(response).termList.term;
+                intelligentRequestData(typeValue, function(type, data) {
+                    intelligentData = data;
                     loadData = true;
                     printIntelligentData(textInput, typeValue);
                 });
@@ -237,34 +311,64 @@
             if(textInput != ''){
                 $.each(intelligentData, function(index, value){
                     if(value.text.toLowerCase().match(textInput.toLowerCase())){
-                        $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
+                        if(!IsAlreadyExist(value.medcinId))
+                            $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
                     }
                 })
             }
             else{
                 $.each(intelligentData, function(index, value){
-                    $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
+                    if(!IsAlreadyExist(value.medcinId))
+                        $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
                 })
             }
         }
+
+        function IsAlreadyExist(medcinId) {
+            for(var i = 0; i < selectedList.length; ++i) {
+                if(selectedList[i].id == medcinId)
+                    return true;
+            }
+            return false;
+        }
     
         function selectItem(medcinId, selectedText, typeValue) {
-            for(var i = 0; i < selectedList.length; ++i){
-                if(selectedList[i].id == medcinId) {
-                    $('#searchList').empty();
-                    $('#searchBox').val('')
-                    changeType();
-                    return;
-                }
-            }
             selectedList.push({id: medcinId, type: typeValue, text: selectedText });
             $selectedArea = $('#selectedArea');
-            $selectedArea.append("<span class='tag type"+ typeValue +"' id='"+ medcinId +"' draggable='true' ondragstart='drag(event)'>" + selectedText + "</span>");
+            $selectedArea.append("<span class='tag type"+ typeValue +"' id='"+ medcinId +"' draggable='true' ondragstart='drag(event)' ondragend='dragEnd(event)'>" + selectedText + "</span>");
             
             $('#searchList').empty();
             $('#searchBox').val('');
             loadData = false;
             changeType();
+            addShortcut();
+        }
+
+        function addShortcut() {
+            showShortcut();
+            for(var i = 1; i < 8; ++i) {
+                if(i == 4) 
+                    continue;
+                
+                addShortcutType(i);
+            }
+        }
+
+        function addShortcutType(termType) {
+            intelligentRequestData(termType, function(type, data) {
+                $slot = $('#slot' + termType);
+                $slot.empty();
+
+                var index = 0;
+                var count = 0;
+                while(count < 2) {
+                    if(!IsAlreadyExist(data[index].medcinId)) {
+                        $slot.append("<span class='tag type"+ type +"' id='"+ data[index].medcinId +"' draggable='true' ondragstart='dragShortcut(event,"+ type +")' ondragend='dragEnd(event)'>" + data[index].text + "</span>")
+                        count++;
+                    }
+                    index++;
+                }
+            });
         }
 
         function changeType(){
@@ -280,12 +384,44 @@
 
         function drag(event) {
             event.dataTransfer.setData("text", event.target.id);
+            dragFromShortcut = false;
+            isDrag = true;
+        }
+
+        function dragShortcut(event, type) {
+            event.dataTransfer.setData("text", event.target.id);
+            event.dataTransfer.setData("type", type);
+            dragFromShortcut = true;
+            isDrag = true;
         }
 
         function drop(event) {
             event.preventDefault();
-            var data = event.dataTransfer.getData("text");
-            event.target.appendChild(document.getElementById(data));
+            var id = event.dataTransfer.getData("text");
+            var object = document.getElementById(id);
+            event.target.appendChild(object);
+
+            if(dragFromShortcut && !IsAlreadyExist(id)) {
+                var type = event.dataTransfer.getData("type");
+                var text = object.innerHTML;
+                selectedList.push({id: id, type: type, text: text });
+
+                addShortcut();
+            }
+        }
+
+        function dragEnd(event) {
+            isDrag = false;
+        }
+
+        function hideShortcut() {
+            $("#shortcut").hide(300);
+            $(".dropbox").css("margin-left", "25%")
+        }
+
+        function showShortcut() {
+            $("#shortcut").show(300);
+            $(".dropbox").css("margin-left", "3%");
         }
 
         function DFS(parent){
@@ -309,20 +445,30 @@
             DFS(element);
             for(var i = 0; i < selectedList.length ; ++i){
                 for(var j = 0; j < childenElements.length; ++j){
-                    if(i >= selectedList.length) break;
+                    if(i >= selectedList.length)
+                        break;
+
                     if(selectedList[i].id == parseInt(childenElements[j].id)){
                         selectedList.splice(i,1);
-                        j = 0;
+                        j = -1;
                     }
                 }
             }
             childenElements.splice(0,childenElements.length);
             element.parentNode.removeChild(element);
             loadData = false;
+
+            if(selectedList.length > 0) {
+                if($("#intelligenceCheckBox").val() == 'true')
+                    intelligentSearch($("#searchBox").val(), $("#termtype").val());
+            }
+            else {
+                clearValue();
+            }
         }
 
         var cols = document.querySelectorAll('#trash');
-            [].forEach.call(cols, function(col) {
+        [].forEach.call(cols, function(col) {
             col.addEventListener('dragenter', handleDragEnter, false);
             col.addEventListener('dragleave', handleDragLeave, false);
             col.addEventListener('drop', handleDragEnd, false);
@@ -342,6 +488,29 @@
 
         function focusInput() {
             $('#searchBox').focus();
+        }
+
+        function clearValue() {
+            $('#searchList').empty();
+            $('#searchBox').val('');
+            $("#intelligenceCheckBox").prop('checked', false);
+            $("#intelligenceCheckBox").attr('value', 'false');
+            hideShortcut();
+        }
+
+        function clearAllTags() {
+            selectedList.splice(0,selectedList.length);
+            removeTags('dropArea');
+            removeTags('selectedArea');
+            clearValue();
+        }
+
+        function removeTags(parentId) {
+            var container = document.getElementById(parentId);
+            var elements = container.getElementsByClassName("tag");
+            while (elements[0]) {
+                elements[0].parentNode.removeChild(elements[0]);
+            }
         }
       </script>
     </body>
