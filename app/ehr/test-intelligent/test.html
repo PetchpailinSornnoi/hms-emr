@@ -188,7 +188,7 @@
 
       <p class="title">States:</p>
 
-      <select id="termtype" onchange="changeType()">
+      <select id="termtype" onchange="searchAgain()">
         <option value="1">Symptom</option>
         <option value="2">Physical</option>
         <option value="3">Test</option>
@@ -214,11 +214,11 @@
         var isOverClearBtn = false;
 
         $(document).ready(function(){
-            $("#searchBox").keyup(function(){
-                var textInput = $("#searchBox").val();
-                var typeValue = $("#termtype").val();
+            $('#searchBox').keyup(function(){
+                var textInput = $('#searchBox').val();
+                var typeValue = $('#termtype').val();
 
-                if($("#intelligenceCheckBox").val() == 'true'){
+                if($('#intelligenceCheckBox').val() == 'true'){
                     intelligentSearch(textInput, typeValue);
                 }
                 else {
@@ -226,14 +226,13 @@
                 }
             });
 
-            $("#intelligenceCheckBox").on('change', function() {
+            $('#intelligenceCheckBox').on('change', function() {
                 if ($(this).is(':checked')) {
                     $(this).attr('value', 'true');
-                    intelligentSearch($("#searchBox").val(), $("#termtype").val());
+                    intelligentSearch($('#searchBox').val(), $('#termtype').val());
                 } else {
                     $(this).attr('value', 'false');
-                    $ul_list = $('#searchList');
-                    $ul_list.empty();
+                    clearSearchList();
                 }
             });
 
@@ -241,19 +240,43 @@
             hideShortcut();
         });
 
+        function IsAlreadyExist(medcinId) {
+            for(var i = 0; i < selectedList.length; ++i) {
+                if(selectedList[i].id == medcinId)
+                    return true;
+            }
+            return false;
+        }
+
+        function clearSearchList() {
+            var li_list = $('li');
+            $('#searchList').find(li_list).off();
+
+            $ul_list = $('#searchList');
+            $ul_list.empty();
+        }
+
+        function addSearchList(data) {
+            if(!IsAlreadyExist(data.medcinId)) {
+                $ul_list = $('#searchList');
+                $ul_list.append("<li id='" + data.medcinId + "'>" + data.text + "</li>");
+                $("#" + data.medcinId).on('click', function() { selectItem(data); });
+            }
+        }
+
         function search(textInput,typeValue){
             $.ajax({
-                url: "http://172.18.62.213/quippe/ws.aspx/Medcin/Search?Query="+ textInput +"&CodeFilter=0&GroupBy=0&TermType="+ typeValue +"&DataFormat=2&Culture=en-US",
+                url: "http://172.18.62.213/quippe/ws.aspx/Medcin/Search?Query=" + textInput + "&CodeFilter=0&GroupBy=0&TermType=" + typeValue + "&DataFormat=2&Culture=en-US",
                 type: 'GET',
                 error: function() {
                     callback();
                 },
                 success: function(res) {
                     res = JSON.parse(res);
-                    $ul_list = $('#searchList');
-                    $ul_list.empty();
-                    $.each(res.termList, function(index, value){
-                        $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + $("#termtype").val() + ")\">" + value.text + "</li>");
+                    
+                    clearSearchList();
+                    $.each(res.termList, function(type, data){
+                        addSearchList(data);
                     })
                 }
             });
@@ -305,42 +328,32 @@
         }
 
         function printIntelligentData(textInput, typeValue){
-            $ul_list = $('#searchList');
-            $ul_list.empty();
+            clearSearchList();
 
             if(textInput != ''){
-                $.each(intelligentData, function(index, value){
-                    if(value.text.toLowerCase().match(textInput.toLowerCase())){
-                        if(!IsAlreadyExist(value.medcinId))
-                            $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
+                $.each(intelligentData, function(type, data){
+                    if(data.text.toLowerCase().match(textInput.toLowerCase())){
+                        addSearchList(data);
                     }
                 })
             }
             else{
                 $.each(intelligentData, function(index, value){
-                    if(!IsAlreadyExist(value.medcinId))
-                        $ul_list.append("<li onclick=\"selectItem(" + value.medcinId + ",'" + value.text + "'," + typeValue + ")\">" + value.text + "</li>");
+                    addSearchList(data);
                 })
             }
         }
-
-        function IsAlreadyExist(medcinId) {
-            for(var i = 0; i < selectedList.length; ++i) {
-                if(selectedList[i].id == medcinId)
-                    return true;
-            }
-            return false;
-        }
     
-        function selectItem(medcinId, selectedText, typeValue) {
-            selectedList.push({id: medcinId, type: typeValue, text: selectedText });
+        function selectItem(data) {
+            selectedList.push({id: data.medcinId, type: data.termType, text: data.text });
             $selectedArea = $('#selectedArea');
-            $selectedArea.append("<span class='tag type"+ typeValue +"' id='"+ medcinId +"' draggable='true' ondragstart='drag(event)' ondragend='dragEnd(event)'>" + selectedText + "</span>");
+            $selectedArea.append("<span class='tag type"+ data.termType +"' id='"+ data.medcinId +"' draggable='true' ondragstart='drag(event)' ondragend='dragEnd(event)'>" + data.text + "</span>");
             
-            $('#searchList').empty();
-            $('#searchBox').val('');
             loadData = false;
-            changeType();
+            $('#searchBox').val('');
+            clearSearchList();
+
+            searchAgain();
             addShortcut();
         }
 
@@ -356,7 +369,7 @@
 
         function addShortcutType(termType) {
             intelligentRequestData(termType, function(type, data) {
-                $slot = $('#slot' + termType);
+                $slot = $('#slot' + type);
                 $slot.empty();
 
                 var index = 0;
@@ -371,10 +384,16 @@
             });
         }
 
-        function changeType(){
-            if($("#intelligenceCheckBox").val() == 'true'){
+        function searchAgain(){
+            var textInput = $('#searchBox').val();
+            var typeValue = $('#termtype').val();
+
+            if($("#intelligenceCheckBox").val() == 'true') {
                 loadData = false;
-                intelligentSearch($('#searchBox').val(), $('#termtype').val());
+                intelligentSearch(textInput, typeValue);
+            }
+            else if(textInput != '') {
+                search(textInput, typeValue);
             }
         }
 
@@ -459,19 +478,19 @@
             loadData = false;
 
             if(selectedList.length > 0) {
-                if($("#intelligenceCheckBox").val() == 'true')
-                    intelligentSearch($("#searchBox").val(), $("#termtype").val());
+                searchAgain();
+                addShortcut();
             }
             else {
                 clearValue();
             }
         }
 
-        var cols = document.querySelectorAll('#trash');
-        [].forEach.call(cols, function(col) {
-            col.addEventListener('dragenter', handleDragEnter, false);
-            col.addEventListener('dragleave', handleDragLeave, false);
-            col.addEventListener('drop', handleDragEnd, false);
+        var trashObjects = document.querySelectorAll('#trash');
+        [].forEach.call(trashObjects, function(obj) {
+            obj.addEventListener('dragenter', handleDragEnter, false);
+            obj.addEventListener('dragleave', handleDragLeave, false);
+            obj.addEventListener('drop', handleDragEnd, false);
         });
 
         function handleDragEnter(event) {
@@ -491,7 +510,7 @@
         }
 
         function clearValue() {
-            $('#searchList').empty();
+            clearSearchList();
             $('#searchBox').val('');
             $("#intelligenceCheckBox").prop('checked', false);
             $("#intelligenceCheckBox").attr('value', 'false');
