@@ -259,8 +259,8 @@
         function addSearchList(data) {
             if(!IsAlreadyExist(data.medcinId)) {
                 $ul_list = $('#searchList');
-                $ul_list.append("<li id='" + data.medcinId + "'>" + data.text + "</li>");
-                $("#" + data.medcinId).on('click', function() { selectItem(data); });
+                $ul_list.append("<li id='list" + data.medcinId + "'>" + data.text + "</li>");
+                $("#list" + data.medcinId).on('click', function() { selectItem(data); });
             }
         }
 
@@ -338,7 +338,7 @@
                 })
             }
             else{
-                $.each(intelligentData, function(index, value){
+                $.each(intelligentData, function(index, data){
                     addSearchList(data);
                 })
             }
