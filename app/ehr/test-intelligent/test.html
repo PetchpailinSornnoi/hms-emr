@@ -205,6 +205,7 @@
       <div><ul id="searchList"></ul></div>
 
       <script>
+        var siteLocation = '';
         var selectedList = [];
         var intelligentData = [];
         var loadData = false;
@@ -238,6 +239,16 @@
 
             $("#shortcut").hide();
             hideShortcut();
+
+            if(window.location.protocol == "file:") {
+                siteLocation = "http://172.18.62.213:10101";
+            }
+            else {
+                var site = window.location.href;
+                var arr = url.split("/");
+                var result = arr[0] + "//" + arr[2];
+                siteLocation = result;
+            }
         });
 
         function IsAlreadyExist(medcinId) {
@@ -266,7 +277,7 @@
 
         function search(textInput,typeValue){
             $.ajax({
-                url: "http://172.18.62.213/quippe/ws.aspx/Medcin/Search?Query=" + textInput + "&CodeFilter=0&GroupBy=0&TermType=" + typeValue + "&DataFormat=2&Culture=en-US",
+                url: siteLocation + "/quippe/ws.aspx/Medcin/Search?Query=" + textInput + "&CodeFilter=0&GroupBy=0&TermType=" + typeValue + "&DataFormat=2&Culture=en-US",
                 type: 'GET',
                 error: function() {
                     callback();
@@ -285,16 +296,16 @@
         function intelligentRequestData(typeValue ,callback) {
             var request_body =  "<Patient><Encounters><Encounter><Records>";
             for(var i = 0; i < selectedList.length ; ++i)
-                request_body += '<Record MedcinId="'+selectedList[i].id+'"/>'
+                request_body += '<Record MedcinId="'+selectedList[i].id+'"/>';
             request_body += '</Records></Encounter></Encounters></Patient>';
-    
+            
             var formdat = new FormData();
             formdat.append("chart", request_body);
 
             var settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "http://172.18.62.213/quippe/ws.aspx/Medcin/IntelligentPrompt?ListSize=1&GroupBy=0&TermType="+typeValue+"&DataFormat=2&Culture=en-US",
+                "url": siteLocation + "/quippe/ws.aspx/Medcin/IntelligentPrompt?ListSize=1&GroupBy=0&TermType="+typeValue+"&DataFormat=2&Culture=en-US",
                 "method": "POST",
                 "headers": {
                     "cache-control": "no-cache",
@@ -371,7 +382,7 @@
             intelligentRequestData(termType, function(type, data) {
                 $slot = $('#slot' + type);
                 $slot.empty();
-
+                
                 var index = 0;
                 var count = 0;
                 while(count < 2) {
