@@ -36,7 +36,7 @@ angular.module('myApp', [
     $rootScope.apiUrl = "http://172.18.62.213:10101/hmsgw";
 
     if($window.location.hostname !== 'localhost'){
-       $rootScope.apiUrl = $window.location.host+"/hmsgw";
+       $rootScope.apiUrl = "http://"+$window.location.host+"/hmsgw";
     }
 
      var practitioner = $cookies.getObject('practitioner');
