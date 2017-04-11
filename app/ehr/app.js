@@ -31,13 +31,14 @@ angular.module('myApp', [
 //    });
 // })
 .controller('mainCtrl', function($scope,$rootScope,$cookies,$window) {
-     // $scope.token = $cookies.getObject('token');
-     // console.log($scope.token);
-     // $scope.abc = $cookies.getObject('abc');
+    $rootScope.apiUrl = "http://172.18.62.213:10101/hmsgw";
 
+    if($window.location.hostname !== 'localhost'){
+       $rootScope.apiUrl = $window.location.host+"/hmsgw";
+    }
 
-
-     var practitioner = $cookies.getObject('practitioner');
+    
+    var practitioner = $cookies.getObject('practitioner');
 
      if(practitioner === undefined || practitioner === null){
         console.log(practitioner);

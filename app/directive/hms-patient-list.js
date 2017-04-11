@@ -19,7 +19,7 @@
                   console.log(hn);
                   $http({
                     method : "GET",
-                    url : "http://"+$scope.url+"/Patient/"+hn,
+                    url : $scope.url+"/Patient/"+hn,
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"
@@ -40,7 +40,7 @@
                   
                   $http({
                     method : "GET",
-                    url : "http://"+$scope.url+"/Encounter/"+$scope.practitionerId+"?date="+$scope.date,
+                    url : $scope.url+"/Encounter/"+$scope.practitionerId+"?date="+$scope.date,
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"

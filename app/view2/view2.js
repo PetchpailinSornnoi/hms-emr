@@ -50,7 +50,7 @@ angular.module('myApp.view2', ['ngRoute','ngCookies'])
 
     $http({
             method : "GET",
-            url: "http://172.18.62.213/hmsgw/Dicom/list",
+            url: $rootScope.apiUrl+"/Dicom/list",
             headers: {
                 'Authorization': 'Bearer '+$rootScope.token.access_token,
                 "Access-Control-Allow-Origin": "*"

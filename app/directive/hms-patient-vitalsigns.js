@@ -17,7 +17,7 @@ angular.module('hmsPatientVitalsigns', ["ngCookies"])
                 $scope.getPatientVitalSigns = function() {
                   $http({
                     method : "GET",
-                    url: "http://"+$scope.url+"/Observation/vitalsign/"+$scope.selectedPatient+"/"+$scope.encounter,
+                    url:  $scope.url+"/Observation/vitalsign/"+$scope.selectedPatient+"/"+$scope.encounter,
                     //url: "http://localhost:9000/Observation/vital/09-95-000001",
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,

@@ -16,7 +16,7 @@ angular.module('hmsPatientMedication', ["ngCookies"])
                 $scope.getPatientMedication = function() {
                   $http({
                     method : "GET",
-                    url: "http://"+$scope.url+"/Medication/drug/"+$scope.encounter,
+                    url:  $scope.url+"/Medication/drug/"+$scope.encounter,
                     headers: {
                        'Authorization': 'Bearer '+$scope.accessToken,
                        "Access-Control-Allow-Origin": "*"

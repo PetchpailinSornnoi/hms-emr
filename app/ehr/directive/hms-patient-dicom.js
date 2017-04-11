@@ -15,7 +15,7 @@ angular.module('hmsPatientDicom', ["ngCookies"])
                 $scope.getDicomList = function() {
                     $http({
                             method : "GET",
-                            url: "http://172.18.62.213/hmsgw/Dicom/list",
+                            url: $scope.url+"/Dicom/list",
                             headers: {
                                'Authorization': 'Bearer '+$scope.accessToken,
                                "Access-Control-Allow-Origin": "*"

@@ -195,7 +195,7 @@ body {
                       <span style="display: block; font-size:30px;cursor:pointer; margin-left: 25px; margin-top: 15%; color: darkgray;" onclick="nav()">&#9776;</span> 
             </ul>
 
-            <hms-patient-demographic ng-if="hnHasLoaded" url = "172.18.62.213/hmsgw" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic> 
+            <hms-patient-demographic ng-if="hnHasLoaded" url = "{{apiUrl}}" selected-patient = {{patientId}} access-token = {{token.access_token}} ></hms-patient-demographic> 
 
             <!--  <div class="nav-wrapper">
                   

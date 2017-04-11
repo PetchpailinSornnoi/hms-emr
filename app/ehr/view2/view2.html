@@ -92,7 +92,7 @@
         <!-- Demographics -->
         <div class="well demographics" style="position: relative">
             <div class="row">
-                <hms-patient-demographic url="172.18.62.213/hmsgw" selected-patient={{patientId}} access-token={{token.access_token}}>
+                <hms-patient-demographic url= {{apiUrl}} selected-patient={{patientId}} access-token={{token.access_token}}>
                 </hms-patient-demographic>
                 <!-- <div class="col-md-3">
                     <div class="ver-spacer left">
@@ -103,7 +103,7 @@
         </div>
         <!--Vital Signs -->
         <div class="patient-stats well" style="position: relative">
-            <hms-patient-vitalsigns url="172.18.62.213/hmsgw" encounter={{encounter}} selected-patient={{patientId}} access-token={{token.access_token}}></hms-patient-vitalsigns>
+            <hms-patient-vitalsigns url={{apiUrl}} encounter={{encounter}} selected-patient={{patientId}} access-token={{token.access_token}}></hms-patient-vitalsigns>
         </div>
         <div class="patient-records">
             <!-- Laboratory Results -->
@@ -114,7 +114,7 @@
                         </h3>
                 </div>
                 <div class="panel-body" style="height: auto;">
-                    <hms-patient-labresult url="172.18.62.213/hmsgw" selected-patient={{patientId}} encounter={{encounter}} access-token={{token.access_token}} set-code={{setcode}}></hms-patient-labresult>
+                    <hms-patient-labresult url={{apiUrl}} selected-patient={{patientId}} encounter={{encounter}} access-token={{token.access_token}} set-code={{setcode}}></hms-patient-labresult>
                 </div>
                 <div class="panel-footer">
                     <div class="last-measurement">
@@ -653,7 +653,7 @@
                         </h3>
                 </div>
                 <div class="panel-body" style="height: auto;">
-                    <hms-patient-dicom url="172.18.62.213/hmsgw" access-token={{token.access_token}} selected-patient={{patientId}} encounter={{encounter}}></hms-patient-dicom>
+                    <hms-patient-dicom url= {{apiUrl}} access-token={{token.access_token}} selected-patient={{patientId}} encounter={{encounter}}></hms-patient-dicom>
                 </div>
                 <div class="panel-footer">
                     <div class="last-measurement">
@@ -670,7 +670,7 @@
                 <h3 class="panel-title">Allergies</h3>
             </div>
             <div class="panel-body">
-                <hms-patient-allergy url="172.18.62.213/hmsgw" selected-patient={{patientId}} access-token={{token.access_token}}></hms-patient-allergy>
+                <hms-patient-allergy url= {{apiUrl}} selected-patient={{patientId}} access-token={{token.access_token}}></hms-patient-allergy>
             </div>
         </div>
         <!-- Medications -->
@@ -679,7 +679,7 @@
                 <h3 class="panel-title">Medications</h3>
             </div>
             <div class="panel-body" style="max-height: 160px; overflow-y: scroll;">
-                <hms-patient-medication url="172.18.62.213/hmsgw" encounter={{encounter}} access-token={{token.access_token}}></hms-patient-medication>
+                <hms-patient-medication url= {{apiUrl}} encounter={{encounter}} access-token={{token.access_token}}></hms-patient-medication>
             </div>
         </div>
         <!-- ​Problems -->

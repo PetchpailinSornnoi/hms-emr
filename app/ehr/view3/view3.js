@@ -6,7 +6,7 @@ angular.module('myApp.view3', ['ngRoute','ngCookies'])
     $rootScope.hnHasLoaded = true;
 
     //$scope.fileurl = "https://raw.githubusercontent.com/ivmartel/dwv/master/tests/data/"+$routeParams.file;
-    $scope.fileurl = "http://172.18.62.213/hmsgw/Dicom/"+$routeParams.file;
+    $scope.fileurl = $rootScope.apiUrl+"/Dicom/"+$routeParams.file;
     //$scope.fileurl = "http://localhost:8009/getDICOM";
     $scope.dicomURL ="DWV-Dicom/dwv/viewers/static/index.html?input="+$scope.fileurl;
     //$scope.dicomURL = "DWV-Dicom/dwv/viewers/static/index.html";
