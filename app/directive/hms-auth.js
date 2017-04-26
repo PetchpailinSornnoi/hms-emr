@@ -33,14 +33,14 @@ angular.module('hmsAuth', ["ngCookies"])
                     var pass_authen = "865202d8a5d38f56e428b3c0b512510c";
 
                     $http({
-                        method : "GET",
+                        method : "POST",
                         url: $scope.url+"/user/authentication",
                         //url: "http://172.18.62.213/hmsgw/user_authentication?user=009900203&pass=865202d8a5d38f56e428b3c0b512510c",
                         headers: {
                            'Authorization': 'Bearer '+$scope.accessToken,
                            "Access-Control-Allow-Origin": "*"
                         },
-                        params: {"user": user_authen , "pass": pass_authen}
+                        data: {"user": user_authen , "pass": pass_authen}
                     }).then(function mySuccess(response) {
                         console.log(response.data.data);
                         var practitioner = response.data.data;
