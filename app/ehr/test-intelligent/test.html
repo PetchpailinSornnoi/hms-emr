@@ -161,11 +161,118 @@
           #clearBtn:hover {
             box-shadow: 0 0px 16px 0 rgba(0,0,0,0.24),0 6px 20px 0 rgba(0,0,0,0.19);
           }
+          #orderBtn {
+            position: absolute;
+            border: none;
+            border-radius: 25px;
+            background-color: #b3e5fc;
+            outline: none;
+            padding: 10px;
+            font-size: 1em;
+            margin-left: 25px;
+            transition: .5s ease;
+            -webkit-transition: .5s ease;
+          }
+          #orderBtn:hover {
+            box-shadow: 0 0px 16px 0 rgba(0,0,0,0.24),0 8px 8px 0 rgba(0,0,0,0.19);
+          }
+          #orderBtn:active {
+            background-color: #40c4ff;
+            color: black;
+          }
+          .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+          }
+          .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: none;
+            width: 80%;
+            height: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+          }
+          @-webkit-keyframes animatetop {
+            from {top:-100%; opacity:0} 
+            to {top:0; opacity:1}
+          }
+          @keyframes animatetop {
+            from {top:-100%; opacity:0}
+            to {top:0; opacity:1}
+          }
+          .modal-body { 
+            padding: 2px 16px;
+            height: 95%;
+            overflow: auto;
+          }
+          .modal-footer {
+            background-color: #b3e5fc;
+            text-align: right;
+            vertical-align: middle;
+            bottom: 0;
+            padding: 7px;
+            width: 100%;
+            box-sizing: border-box;
+          }
+          .modal-btn {
+            border: none;
+            border-radius: 25px;
+            background-color: #80cbc4;
+            outline: none;
+            padding: 7px 16px;
+            font-size: 1em;
+            transition: .5s ease;
+            -webkit-transition: .5s ease;
+          }
+          .modal-btn:hover {
+            box-shadow: 0 0px 16px 0 rgba(0,0,0,0.24),0 8px 8px 0 rgba(0,0,0,0.19);
+          }
+          .modal-btn:active {
+            background-color: #00796b;
+            color: white;
+          }
+          table { 
+            border-collapse: collapse;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+          }
+          table td, table th {
+            border: 1px solid black;
+            padding: 7px;
+            text-align: center;
+          }
+          table tr:first-child th { border-top: 0; background-color: #9ccc65; }
+          table tr:nth-child(odd) { background-color: #f2f2f2; }
+          table tr:last-child td { border-bottom: 0; }
+          table tr td:first-child, table tr th:first-child { border-left: 0; }
+          table tr td:last-child, table tr th:last-child { border-right: 0; }
+          #resultIframe {
+              margin-top: 16px;
+              width: 100%;
+              height: 400px;
+          }
       </style>
 
     </head>
     <body>
-      <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+      <script src="/js/xml2json.js"></script>
 
       <h1 class="header">Intelligent Prompt</h1>
 
@@ -185,6 +292,7 @@
             <button id="clearBtn" onclick="clearAllTags()">Clear</button>
           </div>
       </div>
+      <button id="orderBtn" onclick="showDrugOrder()">Drug Order</button>
 
       <p class="title">States:</p>
 
@@ -204,8 +312,27 @@
       </div>
       <div><ul id="searchList"></ul></div>
 
+      <div id="modal" class="modal">
+        <div id="modalContent" class="modal-content">
+          <div class="modal-body">
+            <table id="drugTable">
+                <tr>
+                    <th style="width: 40%;">Therapy</th>
+                    <th style="width: 60%;">Drug</th>
+                </tr>
+            </table>
+            <iframe id="resultIframe"></iframe>
+          </div>
+          <div class="modal-footer">
+            <button class="modal-btn" onclick="closeModal()">Cancel</button>
+            <button class="modal-btn" onclick="showResult()">Order</button>
+          </div>
+        </div>
+      </div>
+
       <script>
         var siteLocation = '';
+        var siteLocationNoPort = '';
         var selectedList = [];
         var intelligentData = [];
         var loadData = false;
@@ -213,6 +340,7 @@
         var dragFromShortcut = false;
         var isDrag = false;
         var isOverClearBtn = false;
+        var drugData = [];
 
         $(document).ready(function(){
             $('#searchBox').keyup(function(){
@@ -249,6 +377,7 @@
                 var result = arr[0] + "//" + arr[2];
                 siteLocation = result;
             }
+            siteLocationNoPort = siteLocation.substr(0, getPosition(siteLocation, ':', 2)); 
         });
 
         function IsAlreadyExist(medcinId) {
@@ -293,7 +422,7 @@
             });
         }
 
-        function intelligentRequestData(typeValue ,callback) {
+        function intelligentRequestData(typeValue, callback) {
             var request_body =  "<Patient><Encounters><Encounter><Records>";
             for(var i = 0; i < selectedList.length ; ++i)
                 request_body += '<Record MedcinId="'+selectedList[i].id+'"/>';
@@ -349,7 +478,7 @@
                 })
             }
             else{
-                $.each(intelligentData, function(type, data){
+                $.each(intelligentData, function(index, data){
                     addSearchList(data);
                 })
             }
@@ -383,14 +512,24 @@
                 $slot = $('#slot' + type);
                 $slot.empty();
                 
-                var index = 0;
-                var count = 0;
-                while(count < 2) {
-                    if(!IsAlreadyExist(data[index].medcinId)) {
-                        $slot.append("<span class='tag type"+ type +"' id='"+ data[index].medcinId +"' draggable='true' ondragstart='dragShortcut(event,"+ type +")' ondragend='dragEnd(event)'>" + data[index].text + "</span>")
-                        count++;
+                if(typeof(data) == 'undefined')
+                    return;
+
+                if(data.length === undefined) {
+                    if(!IsAlreadyExist(data.medcinId)) {
+                        $slot.append("<span class='tag type"+ type +"' id='"+ data.medcinId +"' draggable='true' ondragstart='dragShortcut(event,"+ type +")' ondragend='dragEnd(event)'>" + data.text + "</span>");
                     }
-                    index++;
+                }
+                else {
+                    var index = 0;
+                    var count = 0;
+                    while(count < 2) {
+                        if(!IsAlreadyExist(data[index].medcinId)) {
+                            $slot.append("<span class='tag type"+ type +"' id='"+ data[index].medcinId +"' draggable='true' ondragstart='dragShortcut(event,"+ type +")' ondragend='dragEnd(event)'>" + data[index].text + "</span>");
+                            count++;
+                        }
+                        index++;
+                    }
                 }
             });
         }
@@ -542,6 +681,225 @@
                 elements[0].parentNode.removeChild(elements[0]);
             }
         }
+
+        function getPosition(string, subString, index) {
+            return string.split(subString, index).join(subString).length;
+        }
+
+        function textService(id, index, passCallback, callback) {
+            $.ajax({
+                url: siteLocation + "/quippe/ws.aspx/Quippe/TextService/AllPhrases?MedcinId="+id+"&Usage=-1&Culture=All&DataFormat=JSON",
+                type: 'GET',
+                error: function() {
+                    callback(null);
+                },
+                success: function(res) {
+                    callback(index, JSON.parse(res), passCallback);
+                }
+            });
+        }
+
+        function parseXml(xml) {
+            var dom = null;
+            if (window.DOMParser) {
+                try { 
+                    dom = (new DOMParser()).parseFromString(xml, "text/xml"); 
+                } 
+                catch (e) { dom = null; }
+            }
+            else if (window.ActiveXObject) {
+                try {
+                    dom = new ActiveXObject('Microsoft.XMLDOM');
+                    dom.async = false;
+                    if (!dom.loadXML(xml)) // parse error ..
+                        window.alert(dom.parseError.reason + dom.parseError.srcText);
+                } 
+                catch (e) { dom = null; }
+            }
+            else
+                alert("cannot parse xml string!");
+            return dom;
+        }
+
+        function mimsFindProduct(list, index, passCallback, callback) {
+            var request_body =  "<Request><List>";
+            for(var i = 0; i < list.length ; ++i)
+                request_body += "<Product><ByName>"+list[i]+"</ByName></Product>";
+            request_body += "</List></Request>";
+            
+            var formdat = new FormData();
+            formdat.append("chart", request_body);
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": siteLocationNoPort + ":4567" + "/requestXml",
+                "method": "POST",
+                "headers": {
+                    "cache-control": "no-cache",
+                },
+                "processData": false,
+                "contentType": false,
+                "mimeType": "multipart/form-data",
+                "data": formdat
+            }
+        
+            $.ajax(settings).done(function (response) {
+                var dom = parseXml(response)
+                var data = xml2json(dom, " ");
+                callback(index, JSON.parse(data), passCallback);
+            });
+        }
+
+        function getDrugData(index, callback) {
+            textService(selectedList[index].id, index, callback, function(passIndex, data, passCallback) {
+                if(data == null || data.conceptPhrases == null){
+                    passCallback(passIndex, null);
+                    return;
+                }
+                
+                var requestList = [];
+                var langList = data.conceptPhrases;
+
+                for(var i = 0; i < langList.length; ++i) {
+                    var localLang = langList[i];
+                    var phrase = '';
+                    if(localLang.conceptPhrase.length === undefined) {
+                        phrase = localLang.conceptPhrase.positive.text;
+                        if(phrase.indexOf(' ') === -1)
+                            requestList.push(phrase);
+                    }
+                    else {
+                        for(var j = 0; j < localLang.conceptPhrase.length; ++j) {
+                            phrase = localLang.conceptPhrase[j].positive.text;
+                            if(phrase.indexOf(' ') === -1)
+                                requestList.push(phrase);
+                        }
+                    }
+                }
+                
+                mimsFindProduct(requestList, index, passCallback, function(passIndex2, resultData, passCallback2) {
+                    if(resultData.Result.List.Product === undefined){
+                        passCallback2(passIndex2, null);
+                        return;
+                    }
+
+                    passCallback2(passIndex2, resultData.Result.List.Product);
+                    drugData.push({index: passIndex2, product: resultData.Result.List.Product});
+                });
+            });
+        }
+
+        function showDrugOrder() {
+            $table = $("#drugTable");
+            for(var i = 0; i < selectedList.length; ++i) {
+                if(selectedList[i].type != 7)
+                    continue;
+                
+                getDrugData(i, function(index, data) {
+                    var item = '<tr>' + '<td>' + selectedList[index].text + '</td>';
+                    
+                    if(data == null)
+                        item += '<td>No product available</td></tr>';
+                    else {
+                        item += '<td><select id="drug' + index + '">';
+                        for(var j = 0; j < data.length; ++j) {
+                            item += '<option value="' + data[j].reference + '">' + data[j].name + '</option>';
+                        }
+                        item += '</select></td></tr>';
+                    }
+                    $table.append(item);
+                });
+            }
+            openModal();
+        }
+
+        function transformXML(xml, callback) {
+            $.ajax({
+                type: "POST",
+                url: siteLocationNoPort + ":4567" + "/transformXml",
+                dataType: 'text',
+                data: xml,
+                success: function (html) {
+                    callback(html);
+                }
+            });
+        }
+
+        function mimsRequestResult(productList, allergyList, callback) {
+            var request_body =  "<Request><Interaction><Prescribing>";
+            for(var i = 0; i < productList.length; ++i)
+                request_body += '<Product reference="' + productList[i] + '" />';
+            request_body += "</Prescribing><Allergies>";
+            for(var j = 0; j < allergyList.length; ++j)
+                request_body += '<' + allergyList[j].type + ' reference="' + allergyList[j].ref + '" />';
+            request_body += "</Allergies><References /><DuplicateIngredient /></Interaction></Request>";
+
+            var formdat = new FormData();
+            formdat.append("chart", request_body);
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": siteLocationNoPort + ":4567" + "/requestXml",
+                "method": "POST",
+                "headers": {
+                    "cache-control": "no-cache",
+                },
+                "processData": false,
+                "contentType": false,
+                "mimeType": "multipart/form-data",
+                "data": formdat
+            }
+        
+            $.ajax(settings).done(function (response) {
+                transformXML(response, callback);
+            });
+        }
+
+        function showResult() {
+            var products = [];
+            for(var i = 0; i < drugData.length; ++i)
+                products.push($("#drug"+drugData[i].index).val());
+            
+            //hard code
+            //var allergies = [ { type: "SubstanceClass", ref: "{9E775009-231D-728D-E034-080020E1DD8C}"} ];
+            var allergies = [ { type: "GenericItem", ref: "{B3E5E9FF-0858-4B5E-E034-080020E1DD8C}"} ];
+            mimsRequestResult(products,allergies,function(html){
+                html = html.substr(html.indexOf("<html>"),html.length);
+
+                var rIframe = $("#resultIframe");
+                rIframe.contents().find('body').empty();
+                rIframe.contents().find('body').append(html);
+                rIframe.css("display", "block");
+            });
+        }
+
+        function openModal() {
+            $("#modal").css("display", "block");
+            $("#resultIframe").css("display", "none");
+        }
+
+        function closeModal() {
+            $("#modalContent").animate({top: '-100%', opacity: '0'}, 400, function() {
+                $("#modal").css("display", "none");
+
+                var mContent = $("#modalContent");
+                mContent.css("top", "0");
+                mContent.css("opacity", "1");
+
+                $table = $("#drugTable");
+                $table.empty();
+                $table.append('<tr><th style="width: 40%;">Therapy</th><th style="width: 60%;">Drug</th></tr>');
+                $("#resultIframe").contents().find('body').empty();
+            });
+        }
+        
+        $(window).click(function(event){
+            if(event.target == $("#modal").get(0))
+                closeModal();
+        });
+
       </script>
     </body>
   </html>
